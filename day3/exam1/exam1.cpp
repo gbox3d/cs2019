@@ -5,8 +5,13 @@
 #include <iostream>
 #include <stdio.h>
 
+
+
 int main()
 {
 	printf_s("Hello World!\n");
+	printf_s("%d \n",10);
+	printf_s("%d / %d \n",10,20);
     //std::cout << "Hello World!\n"; 
+	return 0;
 }
