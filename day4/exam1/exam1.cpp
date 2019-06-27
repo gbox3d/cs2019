@@ -9,7 +9,7 @@ int main()
 	char _a = 'A';
 	const char *_b = "hello";
 	char _c[16] = "world"; //16byte 문자배열
-	printf_s("%c \n",_a);
+	printf_s("%c \n", _a);
 	printf_s("%s \n", _b);
 	printf_s("%s \n", _c);
 	//입력

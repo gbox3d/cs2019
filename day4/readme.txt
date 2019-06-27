@@ -35,6 +35,16 @@ const char *,char []=> 문자열
 => 3번째 인자에 입력버퍼의 바이트수 반드시 기입
 => scanf_s("%c",&_c,1) => 여기서 1은 1바이트를 뜻함
 
+TCHAR => wide char vs mult byte
+TCHAR => char->TCHAR , TCHAR->char
+stl::string
+
+=> sprintf => 문자열로 결과를 출력
+=> sscanf => 키보드가 아닌 형식화된 문자열로 부터 입력
+
+
+
+
 
 
 
