@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{11C49D42-A3EF-432E-B82F-4F6EB20DA504}</ProjectGuid>
+    <ProjectGuid>{01C9B362-899F-48B4-B4AB-0BE6E9FC3B68}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>t1</RootNamespace>
+    <RootNamespace>exam1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -151,11 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\cstudy\engine\utils.cpp" />
-    <ClCompile Include="t1.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\..\cstudy\engine\utils.h" />
+    <ClCompile Include="exam1.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
