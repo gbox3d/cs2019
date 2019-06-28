@@ -13,6 +13,8 @@ int main()
 	scanf_s("%c\n", &a, sizeof(a));	
 	scanf_s("%c\n", &b, sizeof(b));
 	scanf_s("%c", &c, sizeof(c));
+
+	//sscanf_s
 	printf_s("=> %c %c %c\n",a,b,c);
 
 }
