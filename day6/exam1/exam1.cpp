@@ -7,11 +7,16 @@ int main()
 {
     //std::cout << "Hello World!\n";
 	int i = 0;
-	int dan = 7;
-	for (i = 1; i <= 9; i++)
+	int dan = 1;
+	for (dan = 1; dan <= 9; dan++)
 	{
-		printf_s("%d*%d = %d \n",dan,i, i*7);
+		printf_s("-----------%d단------\n", dan);
+		for (i = 1; i <= 9; i++)
+		{
+			printf_s("%d*%d = %d \n", dan, i, i * dan);
+		}
 	}
+	
 
 	return 0;
 }
