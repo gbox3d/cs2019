@@ -27,38 +27,54 @@ int _div(int a, int b)
 	return result;
 }
 
+void _Sum(int a, int b)
+{
+	printf_s("두수의 합은 : %d\n", _sum(a, b));
+}
+
+void _Sub(int a, int b)
+{
+	printf_s("두수의 차는 : %d\n", _sub(a, b));
+}
+
+void _Mul(int a, int b)
+{
+	printf_s("두수의 곱은 : %d\n", _mul(a, b));
+}
+
+void _Div(int a, int b)
+{
+	printf_s("두수의 몫은 : %d\n", _div(a, b));
+}
+
+void calc(int a,int b,char _operator)
+{
+	switch (_operator)
+	{
+	case '+':
+		_Sum(a, b);
+		break;
+	case '-':
+		_Sub(a, b);
+		break;
+	case '*':
+		_Mul(a, b);
+		break;
+	case '/':
+		_Div(a, b);
+		break;
+	default:
+		break;
+	}
+}
+
 int main()
 {
 	int a, b;
 	char _operator;
-
-	scanf_s("%d %c %d", &a, &_operator, sizeof(_operator), &b); // 3 + 5 
+	scanf_s("%d %c %d", &a, &_operator, sizeof(_operator), &b); // 3 + 5 	
 	printf_s("%d,%c,%d\n", a, _operator, b);
-	switch (_operator)
-	{
-	case '+':
-	{	
-		printf_s("두수의 합은 : %d\n",_sum(a,b));
-	}
-		break;
-	case '-':
-	{	
-		printf_s("두수의 차는 : %d\n",_sub(a,b));
-	}
-	break;
-	case '*':
-	{	
-		printf_s("두수의 곱은 : %d\n", _mul(a,b));
-	}
-	break;
-	case '/':
-	{	
-		printf_s("두수의 몫은 : %d\n", _div(a,b));
-	}
-	break;
-	default:
-		break;
-	}
+	calc(a, b, _operator);
 
     
 }
