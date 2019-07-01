@@ -75,7 +75,5 @@ int main()
 	scanf_s("%d %c %d", &a, &_operator, sizeof(_operator), &b); // 3 + 5 	
 	printf_s("%d,%c,%d\n", a, _operator, b);
 	calc(a, b, _operator);
-
-    
 }
 
