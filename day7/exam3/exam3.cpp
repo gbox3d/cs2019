@@ -56,6 +56,19 @@ void insertData(int _data)
 	nLastIndex++;
 }
 
+void insertToData(int _data, int _nIndex)
+{
+	if (nLastIndex >= 0) 
+	{
+		for (int i = nLastIndex; i >= _nIndex; i--)
+		{
+			nBuf[i + 1] = nBuf[i];
+		}
+	}
+	nBuf[_nIndex] = _data;
+	nLastIndex++;
+}
+
 int main()
 {
 	int _bLoop = 1;
@@ -69,7 +82,11 @@ int main()
 		case 2: {printf_s("pop : %d\n",popData()); } break; //pop
 		case 3: printData(); break; //show
 		case 4: {printf_s("del : %d\n",deteleData() ); }break;
-		case 5: {int _num; printf_s("input num =>"); scanf_s("%d", &_num); insertData(_num); }break;
+		case 5: {int _num; printf_s("input num =>"); scanf_s("%d", &_num); insertData(_num); } break;
+		case 6: {int _num,_index; printf_s("input num =>"); 
+			scanf_s("%d %d", &_num,&_index); 
+			insertToData(_num,_index); 
+		}
 		}
 
 	}
