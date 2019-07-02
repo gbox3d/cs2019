@@ -30,6 +30,32 @@ int popData()
 	}
 	return _r;
 }
+int deteleData()
+{
+	int _r=-9999;
+	if (nLastIndex >= 0)
+	{
+		_r = nBuf[0];
+		for (int i = 0; i < nLastIndex; i++)
+		{
+			nBuf[i] = nBuf[i + 1];
+		}
+		nLastIndex--;
+	}
+	return _r;
+}
+void insertData(int _data)
+{	
+	if (nLastIndex >= 0) {
+		for (int i = nLastIndex; i >= 0; i--)
+		{
+			nBuf[i + 1] = nBuf[i];
+		}
+	}
+	nBuf[0] = _data;
+	nLastIndex++;
+}
+
 int main()
 {
 	int _bLoop = 1;
@@ -42,6 +68,8 @@ int main()
 		case 1: {int _num; printf_s("input num =>"); scanf_s("%d", &_num); pushData(_num); }  break; //push
 		case 2: {printf_s("pop : %d\n",popData()); } break; //pop
 		case 3: printData(); break; //show
+		case 4: {printf_s("del : %d\n",deteleData() ); }break;
+		case 5: {int _num; printf_s("input num =>"); scanf_s("%d", &_num); insertData(_num); }break;
 		}
 
 	}
