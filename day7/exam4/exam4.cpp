@@ -13,9 +13,15 @@ void displayMap(int _Map[])
 			if (_cell == 0) { printf_s(" "); }
 			else if (_cell == 1) { printf_s("#"); }
 			else if (_cell == 2) { printf_s("@"); }
+			else if (_cell == 3) { printf_s("A"); }
 		}
 		printf_s("\n");
 	}
+}
+
+void putChar(int _Map[],int x,int y,int c)
+{
+	_Map[(y * 8) + x] = c;
 }
 
 int main()
@@ -32,6 +38,46 @@ int main()
 		1,1,1,1,1,1,1,1
 	};
 
-	displayMap(_Map);
+	//주인공 오브잭트 정의 
+	int player_x, player_y;
+	player_x = 2;
+	player_y = 2;
+	
+	system("cls");
+	int _bLoop = 1;
+	while (_bLoop)
+	{
+		puts("0.exit\n1.display map\n2.putChar");
+		printf_s("cmd>");
+		int _cmd; scanf_s("%d", &_cmd);
+		switch (_cmd)
+		{
+		case 0: _bLoop = 0; puts("종료합니다."); break;
+		case 1: //display
+		{
+			system("cls"); 
+			putChar(_Map, player_x, player_y, 3);  //플레이어 위치 갱신 
+			displayMap(_Map); 
+		}
+		break;
+		case 2: 
+		{
+			int _x, _y;
+			printf_s("input x y=>"); scanf_s("%d %d", &_x, &_y);
+			putChar(_Map, _x,_y, 3);
+		}
+		break; //putObject
+		case 3: 
+		{
+			putChar(_Map,player_x,player_y, 0);
+			player_x += 1;
+		}
+			break; //move left
+		default:
+			break;
+		}
+	}
+
+	
 }
 
