@@ -72,7 +72,26 @@ int main()
 			putChar(_Map,player_x,player_y, 0);
 			player_x += 1;
 		}
-			break; //move left
+			break; //move east
+		case 4:
+		{	
+			putChar(_Map, player_x, player_y, 0);
+			player_x -= 1;
+		}
+		break; //move west
+		case 5:
+		{
+			putChar(_Map, player_x, player_y, 0);
+			player_y += 1;
+		}
+		break; //move south
+		case 6:
+		{
+			putChar(_Map, player_x, player_y, 0);
+			player_y -= 1;
+		}
+		break; //move north
+
 		default:
 			break;
 		}
