@@ -68,6 +68,16 @@ void insertToData(int _data, int _nIndex)
 	nBuf[_nIndex] = _data;
 	nLastIndex++;
 }
+int delToData(int _nIndex)
+{
+	int _r = nBuf[_nIndex];
+	for (int i = _nIndex; i < nLastIndex; i++)
+	{
+		nBuf[i] = nBuf[i + 1];
+	}
+	nLastIndex--;
+	return _r;
+}
 
 int main()
 {
@@ -83,10 +93,12 @@ int main()
 		case 3: printData(); break; //show
 		case 4: {printf_s("del : %d\n",deteleData() ); }break;
 		case 5: {int _num; printf_s("input num =>"); scanf_s("%d", &_num); insertData(_num); } break;
-		case 6: {int _num,_index; printf_s("input num =>"); 
-			scanf_s("%d %d", &_num,&_index); 
-			insertToData(_num,_index); 
-		}
+		case 6: {int _num, _index; printf_s("input num =>");
+			scanf_s("%d %d", &_num, &_index);
+			insertToData(_num, _index);
+		}break;
+		case 7: {int _nIndex; scanf_s("%d", &_nIndex); printf_s("del : %d \n",delToData(_nIndex)); }break;
+
 		}
 
 	}
