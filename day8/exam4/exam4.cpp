@@ -10,7 +10,6 @@ void displayBuf(char strTemp[], int nBufSize);
 
 void insertChar(char szBuf[],int nBufSize, int nIndex,char ch)
 {
-
 	szBuf[nIndex] = ch;
 }
 
