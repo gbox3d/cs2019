@@ -8,6 +8,11 @@ char szBuf[256];
 int getStringLength(char strTemp[], int nBufSize);
 void displayBuf(char strTemp[], int nBufSize);
 
+void insertChar(char szBuf[],int nBufSize, int nIndex,char ch)
+{
+	szBuf[nIndex] = ch;
+}
+
 int main()
 {
 	int _bLoop = true; // 1 ,false 0
@@ -19,6 +24,22 @@ int main()
 		{
 		case 0: _bLoop = false; puts("종료 합니다."); break;
 		case 1: displayBuf(szBuf, sizeof(szBuf)); break;
+		case 2: 
+		{
+			printf_s("문자열을 입력하세요.");
+			getchar();
+			gets_s(szBuf, sizeof(szBuf));  
+		}
+		break;
+		case 3:
+		{
+			int nIndex, ch;
+			scanf_s("\n%d %c", &nIndex,&ch);
+			insertChar(szBuf, sizeof(szBuf), nIndex, ch);
+		}	
+			break;
+		case 4:
+			break;
 		default:
 			break;
 		}
