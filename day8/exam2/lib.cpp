@@ -13,3 +13,15 @@ int getStringLength(char strTemp[],int nBufSize)
 	}
 	return nCount;
 }
+
+void displayBuf(char strTemp[], int nBufSize)
+{
+	if (getStringLength(strTemp, nBufSize) <= 0)
+	{
+		puts("빈문자열입니다.");
+	}
+	else
+	{
+		puts(strTemp);
+	}
+}
