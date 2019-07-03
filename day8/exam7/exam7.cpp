@@ -44,7 +44,12 @@ int main()
 		}
 		else if (!strcmp(_cmd, "set"))
 		{
-
+			//puts(pTempNext);
+			int position;
+			int data;
+			position = atoi(strtok_s(NULL, " ", &pTempNext) );
+			data = atoi(strtok_s(NULL, " ", &pTempNext));
+			dataBuffer[position] = data;
 		}
 		else 
 		{
