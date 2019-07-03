@@ -8,13 +8,15 @@ int main()
 {
 	HANDLE hStdOut;
 	TGE::startTGE(&hStdOut);
+	//HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	//HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
 
 	char szTokens[8][TGE::MAX_TOKEN_SIZE];
 	char szBuf[256];
 
 	int bLoop = true;
 
-	//TGE::input::setNormalMode();
+	TGE::input::setEditMode();
 
 	while (bLoop) {
 		puts("명령어를 입력하세요.(v1.0)");
@@ -48,7 +50,7 @@ int main()
 
 	}
 
-	TGE::endTGE();
+	//TGE::endTGE();
 	return 0;
 }
 
