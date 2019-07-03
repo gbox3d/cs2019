@@ -10,6 +10,7 @@ void displayBuf(char strTemp[], int nBufSize);
 
 void insertChar(char szBuf[],int nBufSize, int nIndex,char ch)
 {
+
 	szBuf[nIndex] = ch;
 }
 
@@ -26,15 +27,16 @@ int main()
 		case 1: displayBuf(szBuf, sizeof(szBuf)); break;
 		case 2: 
 		{
-			printf_s("문자열을 입력하세요.");
+			puts("문자열을 입력하세요.");
 			getchar();
 			gets_s(szBuf, sizeof(szBuf));  
 		}
 		break;
 		case 3:
 		{
-			int nIndex, ch;
-			scanf_s("\n%d %c", &nIndex,&ch);
+			int nIndex;
+			char ch;
+			scanf_s("%d %c", &nIndex,&ch,1);
 			insertChar(szBuf, sizeof(szBuf), nIndex, ch);
 		}	
 			break;
