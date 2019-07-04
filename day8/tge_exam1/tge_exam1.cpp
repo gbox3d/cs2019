@@ -6,51 +6,41 @@
 
 int main()
 {
-	HANDLE hStdOut;
-	TGE::startTGE(&hStdOut);
-	//HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-	//HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
-
-	char szTokens[8][TGE::MAX_TOKEN_SIZE];
+	HANDLE hStdout; TGE::startTGE(&hStdout);	
 	char szBuf[256];
-
 	int bLoop = true;
+	TGE::hideCursor(hStdout);
+	while (bLoop) {	
 
-	TGE::input::setEditMode();
+		if (TGE::input::g_KeyTable[VK_RETURN])
+		{
+			TGE::input::pauseInputThread(); //입력쓰레드를 동기입력 모드로
+			TGE::input::setEditMode();
 
-	while (bLoop) {
-		puts("명령어를 입력하세요.(v1.0)");
-		gets_s(szBuf,sizeof(szBuf));
+			TGE::showCursor(hStdout);
+			TGE::setCursor(hStdout, 0, 1);
+			gets_s(szBuf,sizeof(szBuf));
+			if (!strcmp(szBuf, "exit"))
+			{
+				bLoop = false;
+				puts("종료 합니다");
+			}
 
-		int tokenCount = TGE::doTokenize(szBuf, szTokens);
-		if (strcmp(szTokens[0], "exit") == 0)
-		{
-			bLoop = false;
-		}
-		else if (strcmp(szTokens[0], "clear") == 0) 
-		{
-			TGE::clearScreenBuffer(TGE::g_chiBuffer, 0x0020, 0x009f);
-			TGE::updateBuffer(hStdOut, TGE::g_chiBuffer);
-		}
-		else if (strcmp(szTokens[0], "setChar") == 0)
-		{
-			TGE::setCharacter(TGE::g_chiBuffer,10,10, TEXT('A'), 0x00fc);
-			
-			TGE::updateBuffer(hStdOut, TGE::g_chiBuffer);
-		}
-		else {
-			printf_s("%s 는 알수없는 명령어 입니다.\n", szTokens[0] );
+			TGE::input::setNormalMode();
+			TGE::input::resumeInputThread();
+			TGE::input::g_KeyTable[VK_RETURN] = false; //재입력방지
 		}
 
-		/*
-		for (int i = 0; i < tokenCount; i++)
-		{
-			puts(szTokens[i]);
-		}*/
-
+		TGE::setCursor(hStdout, 0, 0);
+		printf_s("U%-4dD%-4dL%-4dR%-4d",
+			TGE::input::g_KeyTable[VK_UP],
+			TGE::input::g_KeyTable[VK_DOWN],
+			TGE::input::g_KeyTable[VK_LEFT],
+			TGE::input::g_KeyTable[VK_RIGHT]
+		);
 	}
 
-	//TGE::endTGE();
+	TGE::endTGE();
 	return 0;
 }
 
