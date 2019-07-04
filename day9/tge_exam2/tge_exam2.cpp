@@ -47,8 +47,7 @@ int main()
 				else
 				{
 					puts("알수없는 명령어");
-				}
-							
+				}			
 			}
 			TGE::input::g_KeyTable[VK_RETURN] = false; //키버퍼 클리어...
 			TGE::input::setNormalMode();
