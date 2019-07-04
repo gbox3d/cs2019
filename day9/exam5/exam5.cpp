@@ -7,10 +7,16 @@ int arraySum(int *pArray,int nLength,int b[])
 {
 	int _sum = 0;
 	printf_s("array size : %d\n", sizeof(pArray)  );
+	
 	for (int i = 0; i < nLength; i++)
 	{
-		_sum += *(pArray + i);
+		//_sum += *(pArray + i);
+		//_sum += pArray[i];
+		_sum += *(pArray++);
+
 	}
+
+
 	*pArray = NULL;
 	b = NULL;
 	
@@ -27,11 +33,12 @@ int main()
 	//a = pA; //error
 	printf_s("%p %p \n",pA,a );
 	a[0] = 10; a[1] = 11; a[2] = 15;
+	*(a+1) = 21; //a[1] = 21;
 
-	printf_s("array size %d ,sum : %d \n",sizeof(a), 
+	printf_s("array size %d ,sum : %d \n",
+		sizeof(a), 
 		arraySum(a,sizeof(a)/sizeof(int),a)
 	);
-
 
 }
 
