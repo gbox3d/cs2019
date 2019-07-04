@@ -7,7 +7,14 @@
 void incNumber(int* _a) 
 {	
 	*_a = *_a + 1;
-	//printf_s("passed a %d \n", _a);
+}
+
+void swapNumber(int* a, int* b)
+{
+	int c;
+	c = *a;
+	*a = *b;
+	*b = c;
 }
 
 int main()
@@ -15,9 +22,12 @@ int main()
 	int a, b;
 	a = 0;
 	b = 4;
+	
 	printf_s("%d \n", a);//0
-
 	incNumber(&a);
 	printf_s("%d \n", a);//1
-    
+
+	printf_s("전 : %d %d\n", a, b);
+	swapNumber(&a, &b);
+	printf_s("후 : %d %d\n", a, b);
 }

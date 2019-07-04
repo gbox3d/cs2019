@@ -18,6 +18,10 @@ int main()
 	printf_s("%d %d\n",*pA,a);
 
 
+	a = b;
+	pA = &a;
+	*pA = b;
+
 	return 0;
 }
 
