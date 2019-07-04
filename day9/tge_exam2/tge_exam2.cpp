@@ -19,6 +19,9 @@ int main()
 
 			//...동기식 코드 
 			char szBuf[256];
+			TGE::setCursor(hStdout, 0, 26);
+			puts(">                            ");
+			TGE::setCursor(hStdout, 1, 26);
 			gets_s(szBuf);
 			int tokenNum = TGE::Tokenize(szBuf);
 
@@ -28,6 +31,18 @@ int main()
 				{
 					bLoop = false;
 					puts("종료합니다.");
+				}
+				else if (strcmp(TGE::g_szTokens[0], "setchar") == 0)
+				{
+					TGE::setCharacterW(TGE::g_chiBuffer,
+						atoi(TGE::g_szTokens[1]),
+						atoi(TGE::g_szTokens[2]),
+						0x0020,0x00f9
+					);
+				}
+				else if (strcmp(TGE::g_szTokens[0], "update") == 0)
+				{
+					TGE::updateBuffer(hStdout, TGE::g_chiBuffer);
 				}
 				else
 				{
@@ -41,7 +56,7 @@ int main()
 		}
 
 		TGE::setCursor(hStdout,0, 26);
-		printf_s("%d", TGE::input::g_KeyTable[VK_RETURN]);
+		//printf_s("%d", TGE::input::g_KeyTable[VK_RETURN]);
 	}
 	TGE::endTGE();
 }
