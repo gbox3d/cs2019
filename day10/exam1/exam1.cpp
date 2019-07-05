@@ -4,11 +4,8 @@
 #include <iostream>
 #include "..\..\..\cstudy\engine\tge.h"
 
-void test()
-{
-	puts("it is test function!");
-}
-
+void test();
+void sample1();
 int main()
 {
 	int bLoop = true;
@@ -25,6 +22,9 @@ int main()
 		else if (!strcmp("call", TGE::g_szTokens[0])) {
 			if (!strcmp("test", TGE::g_szTokens[1])) {
 				test();
+			}
+			if (!strcmp("sample1", TGE::g_szTokens[1])) {
+				sample1();
 			}
 		}
 
