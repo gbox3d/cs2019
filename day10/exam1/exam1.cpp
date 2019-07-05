@@ -6,6 +6,11 @@
 
 void test();
 void sample1();
+void sample2();
+void sample3();
+
+extern int globalNumber;
+
 int main()
 {
 	int bLoop = true;
@@ -19,12 +24,21 @@ int main()
 			bLoop = false;
 			puts("exit");
 		}
+		else if (!strcmp("showValue", TGE::g_szTokens[0])) {
+			printf_s("%d \n", globalNumber);
+		}	
 		else if (!strcmp("call", TGE::g_szTokens[0])) {
 			if (!strcmp("test", TGE::g_szTokens[1])) {
 				test();
 			}
-			if (!strcmp("sample1", TGE::g_szTokens[1])) {
+			else if (!strcmp("sample1", TGE::g_szTokens[1])) {
 				sample1();
+			}
+			else if (!strcmp("sample2", TGE::g_szTokens[1])) {
+				sample2();
+			}
+			else if (!strcmp("sample3", TGE::g_szTokens[1])) {
+				sample3();
 			}
 		}
 

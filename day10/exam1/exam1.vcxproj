@@ -154,6 +154,8 @@
     <ClCompile Include="..\..\..\cstudy\engine\tge.cpp" />
     <ClCompile Include="exam1.cpp" />
     <ClCompile Include="sample1.cpp" />
+    <ClCompile Include="sample2.cpp" />
+    <ClCompile Include="sample3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,11 +6,6 @@ void test()
 	puts("it is test function!");
 }
 
-void sample1_1()
-{
-	//a = 1;
-}
-
 void sample1()
 {
 	int a = 1;
