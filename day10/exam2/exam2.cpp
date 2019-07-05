@@ -5,6 +5,8 @@
 #include "..\..\..\cstudy\engine\tge.h"
 
 void sample1();
+void sample2();
+void sample3();
 
 int main()
 {
@@ -22,6 +24,12 @@ int main()
 		else if (!strcmp("call", TGE::g_szTokens[0])) {
 			if (!strcmp("sample1", TGE::g_szTokens[1])) {
 				sample1();
+			}
+			else if (!strcmp("sample2", TGE::g_szTokens[1])) {
+				sample2();
+			}
+			else if (!strcmp("sample3", TGE::g_szTokens[1])) {
+				sample3();
 			}
 		}
 	}

@@ -12,7 +12,7 @@ void sample1()
 
 	//[За(y)][ї­(x)]
 	printf_s("%d \n",score[1][0]);
-
+	puts("--------------------------------------");
 	for (int row = 0; row < 3; row++)
 	{
 		for (int col = 0; col < 4; col++)
@@ -20,7 +20,13 @@ void sample1()
 			printf_s("%d \n", score[row][col]);
 		}
 	}
-
-
-
+	puts("--------------------------------------");
+	for (int col = 0; col < 4; col++)
+	{
+		for (int row = 0; row < 3; row++)
+		{
+			printf_s("%d \n", score[row][col]);
+		}
+	}
 }
+
