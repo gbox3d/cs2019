@@ -4,6 +4,7 @@
 #include <iostream>
 #include "..\..\..\cstudy\engine\tge.h"
 
+extern CHAR_INFO* pBackBuf;
 void applyEditor();
 
 int main()
@@ -13,8 +14,9 @@ int main()
 	HANDLE hStdout;
 	TGE::startTGE(&hStdout);
 
-	TGE::clearScreenBuffer(0x0020,0x0090);
-	
+	pBackBuf = TGE::CreateScreenBuffer();
+	TGE::clearScreenBuffer(pBackBuf, 0x0020, 0x0090);
+
 	while (bLoop)
 	{
 		/*char szBuf[256];
