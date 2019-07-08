@@ -8,6 +8,31 @@ extern CHAR_INFO* pBackBuf;
 void changeCursorColor(int nColor);
 void applyEditor(HANDLE hStdout);
 
+void test1()
+{
+	printf_s("test 1\n");
+}
+void test2()
+{
+	printf_s("test 2\n");
+}
+void test3()
+{
+	printf_s("test 3\n");
+}
+
+const char* nameTable[] = {
+	"test1",
+	"test2",
+	"test3"
+};
+
+void *arrayHandlers[] = {
+	test1,
+	test2,
+	test3
+};
+
 int main()
 {
 	int bLoop = true;
@@ -36,15 +61,15 @@ int main()
 				bLoop = false;
 				puts("exit program....");
 			}
-			else if (!strcmp("chgcolor", TGE::g_szTokens[0])) {
-				
-				changeCursorColor(
-					atoi( TGE::g_szTokens[1] ) 
-				);
+
+			for (int i = 0; i < 3; i++)
+			{
+				if (strcmp(nameTable[i], TGE::g_szTokens[0]) == 0) {
+					((void (*)())arrayHandlers[i])();
+					break;
+				}
 			}
-			else {
-				puts("알수 없는 명령어입니다.");
-			}
+			
 
 			//커서 다시 숨기기 
 			TGE::hideCursor(hStdout);
