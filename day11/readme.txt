@@ -36,6 +36,33 @@ int sub(int a,int b)  -> o
 double mul(int a,int b) -> x
 int div() -> x
 
+447p. void 포인터
+
+기존의 포인터 => 형을 특정
+void * => 형을 특정하지않음 => 머든지 될수있죠
+=> 줄기세포 포인터 
+
+void 형식의 변수에 값을 읽고 쓰기=> 타입 캐스팅=> 
+
+*(int *)ptr
+*(double *)ptr
+*(char *)ptr
+((void (*)())ptr)()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
