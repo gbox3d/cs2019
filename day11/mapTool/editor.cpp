@@ -6,15 +6,16 @@ int cursorAttr = 0xf0;
 
 CHAR_INFO* pBackBuf;
 
-void changeCursorColor(int nColor)
-{
-	int _Table[] = {
+int _Table[] = {
 		0x00,
 		0xc0,0x40, //嫩擎 說除,橫舒遴 說除
 		0xa0,0x20, //喬儀
 		0x90,0x10,
 		0xF0,0x80
-	};
+};
+
+void changeCursorColor(int nColor)
+{	
 	cursorAttr = _Table[nColor];
 }
 
@@ -22,6 +23,13 @@ void moveCursor(int x,int y)
 {
 	cursor_x = x;
 	cursor_y = y;
+}
+void clearScreen(int nColor)
+{
+	TGE::clearScreenBuffer(pBackBuf,
+		0x0020,
+		_Table[nColor]
+	);
 }
 
 void applyEditor(HANDLE hStdout)

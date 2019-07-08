@@ -5,54 +5,9 @@
 #include "..\..\..\cstudy\engine\tge.h"
 
 extern CHAR_INFO* pBackBuf;
-void changeCursorColor(int nColor);
+
+void parseCommand();
 void applyEditor(HANDLE hStdout);
-
-void parse_chgcolor(void* pObj)
-{
-	changeCursorColor(
-		atoi(((char(*)[64])pObj)[1])
-	);
-}
-
-void test1(void *pObj)
-{
-	printf_s("test 1 %s \n", ((char(*)[64])pObj)[1]);
-}
-void test2(void* pObj)
-{
-	printf_s("test 2\n");
-}
-void test3(void* pObj)
-{
-	printf_s("test 3\n");
-}
-
-void moveCursor(int x, int y);
-
-void parse_moveCursor(void* pObj)
-{
-	moveCursor(
-		atoi(((char(*)[64])pObj)[1]),
-		atoi(((char(*)[64])pObj)[2])
-	);
-}
-
-const char* nameTable[] = {
-	"test1",
-	"test2",
-	"test3",
-	"chgcolor",
-	"mvCursor" //moveCursor xpos ypos
-};
-
-void *arrayHandlers[] = {
-	test1,
-	test2,
-	test3,
-	parse_chgcolor,
-	parse_moveCursor
-};
 
 int main()
 {
@@ -82,19 +37,11 @@ int main()
 				bLoop = false;
 				puts("exit program....");
 			}
-
-			//void* ptr = TGE::g_szTokens;
-			//printf_s("%s \n", ((char(*)[64])ptr)[0]);
-			
-
-			for (int i = 0; i < sizeof(nameTable)/sizeof(nameTable[0]); i++)
-			{
-				if (strcmp(nameTable[i], TGE::g_szTokens[0]) == 0) {
-					((void (*)(void *))arrayHandlers[i])(TGE::g_szTokens);
-					break;
-				}
+			else {
+				parseCommand();
 			}
-			
+			TGE::setCursor(hStdout, 0, 27);
+			printf_s("                                                          ");
 
 			//커서 다시 숨기기 
 			TGE::hideCursor(hStdout);

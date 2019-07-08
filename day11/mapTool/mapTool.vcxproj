@@ -154,6 +154,7 @@
     <ClCompile Include="..\..\..\cstudy\engine\tge.cpp" />
     <ClCompile Include="editor.cpp" />
     <ClCompile Include="mapTool.cpp" />
+    <ClCompile Include="parser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
