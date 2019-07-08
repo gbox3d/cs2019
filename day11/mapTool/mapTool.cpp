@@ -8,29 +8,50 @@ extern CHAR_INFO* pBackBuf;
 void changeCursorColor(int nColor);
 void applyEditor(HANDLE hStdout);
 
-void test1()
+void parse_chgcolor(void* pObj)
 {
-	printf_s("test 1\n");
+	changeCursorColor(
+		atoi(((char(*)[64])pObj)[1])
+	);
 }
-void test2()
+
+void test1(void *pObj)
+{
+	printf_s("test 1 %s \n", ((char(*)[64])pObj)[1]);
+}
+void test2(void* pObj)
 {
 	printf_s("test 2\n");
 }
-void test3()
+void test3(void* pObj)
 {
 	printf_s("test 3\n");
+}
+
+void moveCursor(int x, int y);
+
+void parse_moveCursor(void* pObj)
+{
+	moveCursor(
+		atoi(((char(*)[64])pObj)[1]),
+		atoi(((char(*)[64])pObj)[2])
+	);
 }
 
 const char* nameTable[] = {
 	"test1",
 	"test2",
-	"test3"
+	"test3",
+	"chgcolor",
+	"mvCursor" //moveCursor xpos ypos
 };
 
 void *arrayHandlers[] = {
 	test1,
 	test2,
-	test3
+	test3,
+	parse_chgcolor,
+	parse_moveCursor
 };
 
 int main()
@@ -62,10 +83,14 @@ int main()
 				puts("exit program....");
 			}
 
-			for (int i = 0; i < 3; i++)
+			//void* ptr = TGE::g_szTokens;
+			//printf_s("%s \n", ((char(*)[64])ptr)[0]);
+			
+
+			for (int i = 0; i < sizeof(nameTable)/sizeof(nameTable[0]); i++)
 			{
 				if (strcmp(nameTable[i], TGE::g_szTokens[0]) == 0) {
-					((void (*)())arrayHandlers[i])();
+					((void (*)(void *))arrayHandlers[i])(TGE::g_szTokens);
 					break;
 				}
 			}

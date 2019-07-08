@@ -18,6 +18,12 @@ void changeCursorColor(int nColor)
 	cursorAttr = _Table[nColor];
 }
 
+void moveCursor(int x,int y)
+{
+	cursor_x = x;
+	cursor_y = y;
+}
+
 void applyEditor(HANDLE hStdout)
 {
 	if (TGE::input::g_KeyTable[VK_UP]) {
