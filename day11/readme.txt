@@ -50,6 +50,22 @@ void 형식의 변수에 값을 읽고 쓰기=> 타입 캐스팅=>
 ((void (*)())ptr)()
 
 
+함수 포인터 응용 => 문자열로된 명령어 핸들러 태이블 응용
+=> 
+---------------------------------------------
+동적 할당 함수(malloc,free). exam5 457p.
+
+void *malloc(unsigned int memory_size) 
+=> memory_size는 1 바이트단위 크기 크기 지정
+=> heap
+
+=> maclloc으로 할당된 메모리는 반드시 반납해야된다.
+=> free(void *ptr)
+
+
+
+
+
 
 
 
