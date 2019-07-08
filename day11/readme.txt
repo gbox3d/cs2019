@@ -62,6 +62,8 @@ void *malloc(unsigned int memory_size)
 => maclloc으로 할당된 메모리는 반드시 반납해야된다.
 => free(void *ptr)
 
+가변 배열 예제 496p.
+
 
 
 
