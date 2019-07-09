@@ -151,7 +151,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\cstudy\engine\tge.cpp" />
     <ClCompile Include="exam_room1.cpp" />
+    <ClCompile Include="playerObject.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="playerObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

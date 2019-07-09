@@ -3,13 +3,20 @@
 
 #include <iostream>
 #include "..\..\..\cstudy\engine\tge.h"
+#include "playerObject.h"
 
 int main()
 {
 	HANDLE hStdout;
-	TGE::startTGE(&hStdout);
-	int bLoop = true;
+	TGE::startTGE(&hStdout);	
 	TGE::hideCursor(hStdout);
+
+	S_PlayerObject playerObj;
+	initPlayerObject(&playerObj, "랜디");
+	playerObj.m_fXpos = 30;
+	playerObj.m_fYpos = 10;
+
+	int bLoop = true;
 	while (bLoop) {
 
 		if (TGE::input::g_KeyTable[VK_RETURN]) {
@@ -43,8 +50,19 @@ int main()
 			TGE::input::resumeInputThread();
 		}
 
+		applyPlayerObject(&playerObj); //입력 처리 , 행동에 대한처리 
+
+		TGE::clearScreenBuffer(TGE::g_chiBuffer,0x0020,0x0000);
+
+		DrawPlayerObject(&playerObj,TGE::g_chiBuffer); //그리기 
+
+		TGE::updateBuffer(hStdout, TGE::g_chiBuffer); //우리눈에 보이게 되는 과정
+
 	}
 
 	TGE::endTGE();
+
+	releasePlayerObject(&playerObj);
+
 	return 0;
 }
