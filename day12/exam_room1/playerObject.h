@@ -10,6 +10,6 @@ struct S_PlayerObject
 
 void initPlayerObject(S_PlayerObject* pObj, const char* pszName);
 void releasePlayerObject(S_PlayerObject* pObj);
-void applyPlayerObject(S_PlayerObject* pObj, double _fDelta);
+void applyPlayerObject(S_PlayerObject* pObj, double _fDelta, int* pMap);
 void DrawPlayerObject(S_PlayerObject* pObj, CHAR_INFO* pDrawBuff);
 

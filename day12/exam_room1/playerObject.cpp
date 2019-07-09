@@ -15,7 +15,7 @@ void releasePlayerObject(S_PlayerObject* pObj)
 
 }
 
-void applyPlayerObject(S_PlayerObject* pObj,double _fDelta)
+void applyPlayerObject(S_PlayerObject* pObj,double _fDelta,int *pMap)
 {
 	double _delta = (pObj->m_fSpeed * _fDelta);
 
@@ -28,12 +28,22 @@ void applyPlayerObject(S_PlayerObject* pObj,double _fDelta)
 		//TGE::input::g_KeyTable[VK_DOWN] = false;
 	}
 	else if (TGE::input::g_KeyTable[VK_LEFT]) {
-		pObj->m_fXpos -= _delta;
+		int chkX = (int)(pObj->m_fXpos - 1);
+		int chkY = (int)pObj->m_fYpos;
+		if (pMap[chkY * 8 + chkX] != 1)
+		{
+			pObj->m_fXpos -= _delta;
+		}
+		
 		//TGE::input::g_KeyTable[VK_LEFT] = false;
 	}
 	else if (TGE::input::g_KeyTable[VK_RIGHT]) {
-		pObj->m_fXpos += _delta;
-		//TGE::input::g_KeyTable[VK_RIGHT] = false;
+		int chkX = (int)(pObj->m_fXpos + 1);
+		int chkY = (int)pObj->m_fYpos;
+		if (pMap[chkY * 8 + chkX] != 1)
+		{
+			pObj->m_fXpos += _delta;
+		}
 	}
 	
 
