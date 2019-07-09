@@ -33,7 +33,6 @@ int main()
 	t47TankObj.m_fXpos = 0;
 	t47TankObj.m_fYpos = 0;
 
-
 	printf_s("name : %s\n", t47TankObj.m_szName);
 	printf_s("speed : %f\n", t47TankObj.m_fSpeed);
 
