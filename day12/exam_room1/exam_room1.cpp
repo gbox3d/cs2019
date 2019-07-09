@@ -17,6 +17,11 @@ int main()
 	playerObj.m_fYpos = 10;
 
 	int bLoop = true;
+	
+	UINT64 ddwTick = TGE::util::GetTimeMs64();
+
+	UINT64 accTick =0;
+
 	while (bLoop) {
 
 		if (TGE::input::g_KeyTable[VK_RETURN]) {
@@ -50,7 +55,11 @@ int main()
 			TGE::input::resumeInputThread();
 		}
 
-		applyPlayerObject(&playerObj); //입력 처리 , 행동에 대한처리 
+		UINT64 _deltaTick = TGE::util::GetTimeMs64() - ddwTick;
+		ddwTick = TGE::util::GetTimeMs64();
+		accTick += _deltaTick;
+
+		applyPlayerObject(&playerObj, _deltaTick/1000.0); //입력 처리 , 행동에 대한처리 
 
 		TGE::clearScreenBuffer(TGE::g_chiBuffer,0x0020,0x0000);
 
@@ -59,7 +68,8 @@ int main()
 		TGE::updateBuffer(hStdout, TGE::g_chiBuffer); //우리눈에 보이게 되는 과정
 
 		TGE::setCursor(hStdout,0, 26);
-		printf_s("%4.2f,%4.2f \n", playerObj.m_fXpos, playerObj.m_fYpos);
+		
+		printf_s("%4.2f,%4.2f   %llu      \n", playerObj.m_fXpos, playerObj.m_fYpos, accTick);
 
 	}
 

@@ -6,7 +6,7 @@ void initPlayerObject(S_PlayerObject *pObj,const char *pszName)
 {
 	pObj->m_fXpos = 0;
 	pObj->m_fYpos = 0;
-	pObj->m_fSpeed = 0.5;
+	pObj->m_fSpeed = 10.0;
 	strcpy_s(pObj->m_szName, 64,pszName);
 }
 
@@ -15,9 +15,9 @@ void releasePlayerObject(S_PlayerObject* pObj)
 
 }
 
-void applyPlayerObject(S_PlayerObject* pObj)
+void applyPlayerObject(S_PlayerObject* pObj,double _fDelta)
 {
-	double _delta = (1 * pObj->m_fSpeed);
+	double _delta = (pObj->m_fSpeed * _fDelta);
 
 	if (TGE::input::g_KeyTable[VK_UP]) {
 		pObj->m_fYpos -= _delta;
