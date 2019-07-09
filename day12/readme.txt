@@ -44,6 +44,18 @@ typedef
 => 실제 형식명은 S_aaa => 구버전 c 스타일
 
 => struct S_aaa {....}; => 형식명을 바로 지정가능.
+-----------------------------------------------------
+exam_room 예제
+
+위치 이동 => x,y
+
+이동 속도 => speed => 실수 값 사용 
+=> delta 값 계산.
+=> sigma(delta * speed) = 초당 speed만큼 이동
+=> 예제 참고
+=> playerObject.cpp 파일내 applyPlayerObject 함수 참고
+
+2D 와 1D 변환 공식 => y*width + x = 1차원 배열의 index
 
 
 
