@@ -40,6 +40,7 @@ int main()
 
 	printf_s("%s %d %f \n", myObj.m_szName, myObj.m_nDamage, myObj.m_fXpos);
 
+	releseGameObject(&myObj);
     
 	return 0;
 }
