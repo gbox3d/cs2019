@@ -58,6 +58,9 @@ int main()
 
 		TGE::updateBuffer(hStdout, TGE::g_chiBuffer); //우리눈에 보이게 되는 과정
 
+		TGE::setCursor(hStdout,0, 26);
+		printf_s("%4.2f,%4.2f \n", playerObj.m_fXpos, playerObj.m_fYpos);
+
 	}
 
 	TGE::endTGE();

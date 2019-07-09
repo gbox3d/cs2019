@@ -4,6 +4,7 @@ struct S_PlayerObject
 {
 	char m_szName[64];
 	double m_fXpos, m_fYpos; //위치정보
+	double m_fSpeed;
 
 };
 
