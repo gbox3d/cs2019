@@ -21,5 +21,15 @@ int main()
 		fclose(fp);
 	}
 
+	fopen_s(&fp, "test2.txt", "w");
+	if (fp == NULL) {
+		puts("파일 열기 실패");
+	}
+	else {
+		fputs("hello file write ",fp);
+		fclose(fp);
+		puts("파일 쓰기 성공!");
+	}
+
 	return 0;
 }
