@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exam3", "exam3\exam3.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mapTool", "mapTool\mapTool.vcxproj", "{F8D5BC26-A32E-4AA2-9B7B-1113C0A0AD8D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exam_room1", "exam_room1\exam_room1.vcxproj", "{CD1D849D-AA11-4BCB-B299-30093A57C1AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{F8D5BC26-A32E-4AA2-9B7B-1113C0A0AD8D}.Release|x64.Build.0 = Release|x64
 		{F8D5BC26-A32E-4AA2-9B7B-1113C0A0AD8D}.Release|x86.ActiveCfg = Release|Win32
 		{F8D5BC26-A32E-4AA2-9B7B-1113C0A0AD8D}.Release|x86.Build.0 = Release|Win32
+		{CD1D849D-AA11-4BCB-B299-30093A57C1AC}.Debug|x64.ActiveCfg = Debug|x64
+		{CD1D849D-AA11-4BCB-B299-30093A57C1AC}.Debug|x64.Build.0 = Debug|x64
+		{CD1D849D-AA11-4BCB-B299-30093A57C1AC}.Debug|x86.ActiveCfg = Debug|Win32
+		{CD1D849D-AA11-4BCB-B299-30093A57C1AC}.Debug|x86.Build.0 = Debug|Win32
+		{CD1D849D-AA11-4BCB-B299-30093A57C1AC}.Release|x64.ActiveCfg = Release|x64
+		{CD1D849D-AA11-4BCB-B299-30093A57C1AC}.Release|x64.Build.0 = Release|x64
+		{CD1D849D-AA11-4BCB-B299-30093A57C1AC}.Release|x86.ActiveCfg = Release|Win32
+		{CD1D849D-AA11-4BCB-B299-30093A57C1AC}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
