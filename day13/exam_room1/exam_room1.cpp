@@ -54,6 +54,8 @@ int main()
 	playerObj.m_fXpos = regenPosX;
 	playerObj.m_fYpos = regenPosY;
 
+	int nFsm = 0;
+
 	while (bLoop) {
 
 		if (TGE::input::g_KeyTable[VK_RETURN]) {
@@ -91,23 +93,47 @@ int main()
 		ddwTick = TGE::util::GetTimeMs64();
 		accTick += _deltaTick;
 
-		applyPlayerObject(&playerObj, _deltaTick/1000.0, map); //입력 처리 , 행동에 대한처리 
+		switch (nFsm)
+		{
+		case 0:
+		{
+			TGE::setCursor(hStdout, 0, 0);
+			printf_s("당신은 낮선 방에서 혼자 정신을 잃고 쓰러져있었습니다.");
+			TGE::setCursor(hStdout, 0, 1);
+			printf_s("<진행하려면 스페이스바....>");
+			if (TGE::input::g_KeyTable[VK_SPACE]) {
+				nFsm = 10;
+				TGE::input::g_KeyTable[VK_SPACE] = false; //여러번 눌림 방지 
+			}
+		}
+			break;
+		case 10:
+		{
+			applyPlayerObject(&playerObj, _deltaTick / 1000.0, map); //입력 처리 , 행동에 대한처리 
 
-		TGE::clearScreenBuffer(TGE::g_chiBuffer,0x0020,0x0000);
+			TGE::clearScreenBuffer(TGE::g_chiBuffer, 0x0020, 0x0000);
 
-		TGE::copyScreenBuffer(TGE::g_chiBuffer, pBackBuf);//배경 그리기
-		DrawPlayerObject(&playerObj,TGE::g_chiBuffer); //배경위에 캐릭터 그리기 
-		//TGE::copyScreenBuffer(TGE::g_chiBuffer, pBackBuf);//배경 그리기
+			TGE::copyScreenBuffer(TGE::g_chiBuffer, pBackBuf);//배경 그리기
+			DrawPlayerObject(&playerObj, TGE::g_chiBuffer); //배경위에 캐릭터 그리기 
+			//TGE::copyScreenBuffer(TGE::g_chiBuffer, pBackBuf);//배경 그리기
 
-		TGE::updateBuffer(hStdout, TGE::g_chiBuffer); //우리눈에 보이게 되는 과정
+			TGE::updateBuffer(hStdout, TGE::g_chiBuffer); //우리눈에 보이게 되는 과정
 
-		TGE::setCursor(hStdout,0, 26);
+			TGE::setCursor(hStdout, 0, 26);
+
+			printf_s("%4.2f,%4.2f   %llu      \n", playerObj.m_fXpos, playerObj.m_fYpos, accTick);
+
+			int _chrposIndex = (int)playerObj.m_fYpos * 80 + (int)playerObj.m_fXpos;
+
+			printf_s("  %x    \n", pBackBuf[_chrposIndex].Attributes);
+
+		}
+			break;
+		default:
+			break;
+		}
+
 		
-		printf_s("%4.2f,%4.2f   %llu      \n", playerObj.m_fXpos, playerObj.m_fYpos, accTick);
-
-		int _chrposIndex = (int)playerObj.m_fYpos * 80 + (int)playerObj.m_fXpos;
-
-		printf_s("  %x    \n", pBackBuf[_chrposIndex].Attributes);
 	}
 
 	TGE::endTGE();
