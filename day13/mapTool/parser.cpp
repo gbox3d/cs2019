@@ -55,7 +55,20 @@ void parse_LoadMapData(void* pObj)
 	puts("읽기 완료");
 }
 
+//getTile x y
+void parse_getTileAttribute(void* pObj)
+{
+	CHAR_INFO *pChr = TGE::getCharacter(pBackBuf,
+		atoi(((char(*)[64])pObj)[1]),//x
+		atoi(((char(*)[64])pObj)[2]) //y
+	);
+
+	printf_s("[tile : %d]",pChr->Attributes);
+
+}
+
 const char* nameTable[] = {
+	"getTile",
 	"loadMap",
 	"saveMap",
 	"chgColor", //chgColor color
@@ -64,6 +77,7 @@ const char* nameTable[] = {
 };
 
 void* arrayHandlers[] = {
+	parse_getTileAttribute,
 	parse_LoadMapData,
 	parse_SaveMapData,
 	parse_chgcolor,

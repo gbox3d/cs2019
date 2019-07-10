@@ -38,9 +38,10 @@ int main()
 			if (pBackBuf[nIndex].Attributes == 0xF0) {
 				map[nIndex] = 1;
 			}
-			else if (pBackBuf[nIndex].Attributes == 0x40) {
+			else if (pBackBuf[nIndex].Attributes == 0x40) { //리젠포인트 
 				regenPosX = ix;
 				regenPosY = iy;
+				pBackBuf[nIndex].Attributes = 0x00;
 			}
 			else {
 				map[nIndex] = 0;
@@ -113,6 +114,8 @@ int main()
 
 	free(pBackBuf);
 	releasePlayerObject(&playerObj);
+
+	TGE::showCursor(hStdout);
 
 	return 0;
 }

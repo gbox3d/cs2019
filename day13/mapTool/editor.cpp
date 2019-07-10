@@ -62,5 +62,6 @@ void applyEditor(HANDLE hStdout)
 	TGE::setCharacter(TGE::g_chiBuffer, cursor_x, cursor_y, 0x0020, 0x00f0); //커서 출력 
 
 	TGE::setCursor(hStdout,0, 26);
-	printf_s("%-4d,%-4d,%-4d", cursor_x, cursor_y, cursorAttr);
+	printf_s("%-4d,%-4d,%-4d , %-4d", cursor_x, cursor_y, cursorAttr,
+		TGE::getCharacter(pBackBuf, cursor_x, cursor_y)->Attributes );
 }
