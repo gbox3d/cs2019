@@ -32,8 +32,6 @@ int main()
 	else {
 		puts("파일 오픈 실패");
 	}
-
-
 	
 	free(pObj);
 	return 0;
