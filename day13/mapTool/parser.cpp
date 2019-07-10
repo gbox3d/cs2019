@@ -81,11 +81,43 @@ void parse_DrawHLine(void* pObj)
 	{
 		TGE::setCharacter(pBackBuf, _cx+(i*nDir), _cy, 0x0020, getCursorAttr());
 	}
+}
+
+//drawLine length angle
+void parse_DrawLine(void* pObj)
+{
+	int _cx, _cy;
+	getCursorPos(&_cx, &_cy);
+	int nLength = atoi(((char(*)[64])pObj)[1]); //±Ê¿Ã
+
+	double _x, _y;
+	double _dx, _dy;
+
+	_dx = 1.0;
+	_dy = atof(((char(*)[64])pObj)[2]);
+
 	
+	double __len =  sqrt( (_dx * _dx) + (_dy * _dy) );
+
+	_dx /= __len;
+	_dy /= __len;
+
+	_x = _cx;
+	_y = _cy;
+
+	for (int i = 0; i < nLength; i++)
+	{	
+		TGE::setCharacter(pBackBuf, _x ,_y  , 0x0020, getCursorAttr());
+		_x += _dx;
+		_y += _dy;
+	}
 }
 
 
+
+
 const char* nameTable[] = {
+	"drawLine",
 	"drawHLine",
 	"getTile",
 	"loadMap",
@@ -96,6 +128,7 @@ const char* nameTable[] = {
 };
 
 void* arrayHandlers[] = {
+	parse_DrawLine,
 	parse_DrawHLine,
 	parse_getTileAttribute,
 	parse_LoadMapData,
