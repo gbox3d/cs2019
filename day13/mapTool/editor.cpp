@@ -19,6 +19,16 @@ void changeCursorColor(int nColor)
 	cursorAttr = _Table[nColor];
 }
 
+void getCursorPos(int *curX,int *curY)
+{
+	*curX = cursor_x;
+	*curY = cursor_y;
+}
+int getCursorAttr()
+{
+	return cursorAttr;
+}
+
 void moveCursor(int x,int y)
 {
 	cursor_x = x;

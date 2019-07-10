@@ -18,7 +18,7 @@ int main()
 	TGE::hideCursor(hStdout);
 
 	pBackBuf = TGE::CreateScreenBuffer();
-	TGE::clearScreenBuffer(pBackBuf, 0x0020, 0x0090);
+	TGE::clearScreenBuffer(pBackBuf, 0x0020, 0x0000);
 
 	while (bLoop)
 	{

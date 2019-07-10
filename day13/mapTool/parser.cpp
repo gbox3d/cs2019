@@ -3,6 +3,8 @@
 extern CHAR_INFO* pBackBuf;
 void changeCursorColor(int nColor);
 void moveCursor(int x, int y);
+void getCursorPos(int* curX, int* curY);
+int getCursorAttr();
 
 void parse_chgcolor(void* pObj)
 {
@@ -67,7 +69,24 @@ void parse_getTileAttribute(void* pObj)
 
 }
 
+//drawHLine length
+void parse_DrawHLine(void* pObj)
+{
+	int _cx, _cy;
+	getCursorPos(&_cx, &_cy);
+	int nLength = atoi(((char(*)[64])pObj)[1]); //±Ê¿Ã
+	int nDir = atoi(((char(*)[64])pObj)[2]);
+	
+	for (int i = 0; i < nLength; i++)
+	{
+		TGE::setCharacter(pBackBuf, _cx+(i*nDir), _cy, 0x0020, getCursorAttr());
+	}
+	
+}
+
+
 const char* nameTable[] = {
+	"drawHLine",
 	"getTile",
 	"loadMap",
 	"saveMap",
@@ -77,6 +96,7 @@ const char* nameTable[] = {
 };
 
 void* arrayHandlers[] = {
+	parse_DrawHLine,
 	parse_getTileAttribute,
 	parse_LoadMapData,
 	parse_SaveMapData,
