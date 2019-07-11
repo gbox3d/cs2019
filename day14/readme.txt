@@ -8,3 +8,13 @@ exam1 마우스 입출력 예제
 TGE::input::g_cdMousePos
 TGE::input::g_dwButtonState => 1 좌버튼,2우버튼,4 미들버튼
 
+
+mapTool 리펙토링
+
+editor <- parser
+
+editor <-> parser  => 구현쪽(.cpp)에서 서로 헤더 파일을 포함시킨다.
+
+
+a <---> b
+
