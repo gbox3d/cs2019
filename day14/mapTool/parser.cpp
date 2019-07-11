@@ -1,10 +1,6 @@
 #include "..\..\..\cstudy\engine\tge.h"
+#include "editor.h"
 
-extern CHAR_INFO* pBackBuf;
-void changeCursorColor(int nColor);
-void moveCursor(int x, int y);
-void getCursorPos(int* curX, int* curY);
-int getCursorAttr();
 
 void parse_chgcolor(void* pObj)
 {
@@ -20,41 +16,38 @@ void parse_moveCursor(void* pObj)
 	);
 }
 
-void clearScreen(int nColor);
-
 void parse_clear(void* pObj)
 {
 	clearScreen(atoi(((char(*)[64])pObj)[1]));
 }
 
-/*
-struct S_FunctionTable
-{
-	const char* m_szNameTable[64];
-	void* m_arFpHandler[64];
-};
-
-S_FunctionTable g_FunctionTale;
-
-void addFunctionTable(const char *pszName,void *fp)
-{
-	g_FunctionTale.m_arFpHandler[]
-
-}
-*/
-
 void parse_SaveMapData(void* pObj)
 {
 	char* fileName = ((char(*)[64])pObj)[1];
-	TGE::saveBufferBinary(pBackBuf, fileName);
-	puts("저장 했습니다.");
+	if (saveMapData(fileName) == 0)
+	{
+		puts("저장 했습니다.");
+	}
+	else {
+		puts("저장 실패");
+	}
+	
 }
 
 void parse_LoadMapData(void* pObj)
 {
 	char* fileName = ((char(*)[64])pObj)[1];
-	TGE::loadBufferBinary(pBackBuf, fileName);
-	puts("읽기 완료");
+	if (loadMapData(fileName) == 0)
+	{
+		puts("읽기 완료");
+	}
+	else 
+	{
+		puts("읽기 실패");
+
+	}
+	//TGE::loadBufferBinary(pBackBuf, fileName);
+		
 }
 
 //getTile x y
@@ -112,9 +105,6 @@ void parse_DrawLine(void* pObj)
 		_y += _dy;
 	}
 }
-
-
-
 
 const char* nameTable[] = {
 	"drawLine",

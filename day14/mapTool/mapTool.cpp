@@ -3,11 +3,8 @@
 
 #include <iostream>
 #include "..\..\..\cstudy\engine\tge.h"
-
-extern CHAR_INFO* pBackBuf;
-
-void parseCommand();
-void applyEditor(HANDLE hStdout);
+#include "parser.h"
+#include "editor.h"
 
 int main()
 {
@@ -17,8 +14,7 @@ int main()
 	TGE::startTGE(&hStdout);
 	TGE::hideCursor(hStdout);
 
-	pBackBuf = TGE::CreateScreenBuffer();
-	TGE::clearScreenBuffer(pBackBuf, 0x0020, 0x0000);
+	setupEditor(hStdout);
 
 	while (bLoop)
 	{
@@ -55,6 +51,9 @@ int main()
 		TGE::updateBuffer(hStdout, TGE::g_chiBuffer);
 		
 	}
+
+	endEditor();
+
 	TGE::endTGE();
 	return 0;
 }

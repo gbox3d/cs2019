@@ -42,6 +42,30 @@ void clearScreen(int nColor)
 	);
 }
 
+int saveMapData(const char* fileName)
+{
+	return TGE::saveBufferBinary(pBackBuf, fileName);	
+}
+
+int loadMapData(const char* fileName)
+{
+	return TGE::loadBufferBinary(pBackBuf, fileName);
+}
+
+
+//-------------------
+
+void setupEditor(HANDLE hStdout)
+{
+	pBackBuf = TGE::CreateScreenBuffer();
+	TGE::clearScreenBuffer(pBackBuf, 0x0020, 0x0000);
+}
+
+void endEditor()
+{
+	free(pBackBuf);
+}
+
 void applyEditor(HANDLE hStdout)
 {
 	if (TGE::input::g_KeyTable[VK_UP]) {
