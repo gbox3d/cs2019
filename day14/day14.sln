@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exam1", "exam1\exam1.vcxproj", "{AC17E35C-2F81-4D10-8DFC-F8B68223FBBE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mapTool", "mapTool\mapTool.vcxproj", "{3F4370C2-25B0-41C6-A964-3AD974FEEF4C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{AC17E35C-2F81-4D10-8DFC-F8B68223FBBE}.Release|x64.Build.0 = Release|x64
 		{AC17E35C-2F81-4D10-8DFC-F8B68223FBBE}.Release|x86.ActiveCfg = Release|Win32
 		{AC17E35C-2F81-4D10-8DFC-F8B68223FBBE}.Release|x86.Build.0 = Release|Win32
+		{3F4370C2-25B0-41C6-A964-3AD974FEEF4C}.Debug|x64.ActiveCfg = Debug|x64
+		{3F4370C2-25B0-41C6-A964-3AD974FEEF4C}.Debug|x64.Build.0 = Debug|x64
+		{3F4370C2-25B0-41C6-A964-3AD974FEEF4C}.Debug|x86.ActiveCfg = Debug|Win32
+		{3F4370C2-25B0-41C6-A964-3AD974FEEF4C}.Debug|x86.Build.0 = Debug|Win32
+		{3F4370C2-25B0-41C6-A964-3AD974FEEF4C}.Release|x64.ActiveCfg = Release|x64
+		{3F4370C2-25B0-41C6-A964-3AD974FEEF4C}.Release|x64.Build.0 = Release|x64
+		{3F4370C2-25B0-41C6-A964-3AD974FEEF4C}.Release|x86.ActiveCfg = Release|Win32
+		{3F4370C2-25B0-41C6-A964-3AD974FEEF4C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
