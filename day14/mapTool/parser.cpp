@@ -53,12 +53,16 @@ void parse_LoadMapData(void* pObj)
 //getTile x y
 void parse_getTileAttribute(void* pObj)
 {
-	CHAR_INFO *pChr = TGE::getCharacter(pBackBuf,
+	/*CHAR_INFO *pChr = TGE::getCharacter(pBackBuf,
 		atoi(((char(*)[64])pObj)[1]),//x
 		atoi(((char(*)[64])pObj)[2]) //y
-	);
+	);*/
 
-	printf_s("[tile : %d]",pChr->Attributes);
+	int x = atoi(((char(*)[64])pObj)[1]);
+	int y = atoi(((char(*)[64])pObj)[2]);
+	int attr = getTileAttribute(x,y);
+
+	printf_s("[tile : %d]",attr);
 
 }
 
@@ -70,10 +74,8 @@ void parse_DrawHLine(void* pObj)
 	int nLength = atoi(((char(*)[64])pObj)[1]); //길이
 	int nDir = atoi(((char(*)[64])pObj)[2]);
 	
-	for (int i = 0; i < nLength; i++)
-	{
-		TGE::setCharacter(pBackBuf, _cx+(i*nDir), _cy, 0x0020, getCursorAttr());
-	}
+	DrawHLine(_cx, _cy, nLength, nDir,getCursorAttr());
+	
 }
 
 //drawLine length angle
@@ -82,28 +84,9 @@ void parse_DrawLine(void* pObj)
 	int _cx, _cy;
 	getCursorPos(&_cx, &_cy);
 	int nLength = atoi(((char(*)[64])pObj)[1]); //길이
+	double dy = atof(((char(*)[64])pObj)[2]);
 
-	double _x, _y;
-	double _dx, _dy;
-
-	_dx = 1.0;
-	_dy = atof(((char(*)[64])pObj)[2]);
-
-	
-	double __len =  sqrt( (_dx * _dx) + (_dy * _dy) );
-
-	_dx /= __len;
-	_dy /= __len;
-
-	_x = _cx;
-	_y = _cy;
-
-	for (int i = 0; i < nLength; i++)
-	{	
-		TGE::setCharacter(pBackBuf, _x ,_y  , 0x0020, getCursorAttr());
-		_x += _dx;
-		_y += _dy;
-	}
+	DrawLine(_cx, _cy, nLength,dy);
 }
 
 const char* nameTable[] = {

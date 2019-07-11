@@ -13,3 +13,6 @@ int getCursorAttr();
 void clearScreen(int nColor);
 int saveMapData(const char* fileName);
 int loadMapData(const char* fileName);
+WORD getTileAttribute(int x, int y);
+void DrawHLine(int _cx, int _cy, int nLength, int nDir, int attr);
+void DrawLine(int _cx, int _cy, int nLength, double _dy);

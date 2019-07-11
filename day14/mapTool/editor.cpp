@@ -52,6 +52,49 @@ int loadMapData(const char* fileName)
 	return TGE::loadBufferBinary(pBackBuf, fileName);
 }
 
+WORD getTileAttribute(int x,int y)
+{
+	CHAR_INFO* pChr = TGE::getCharacter(pBackBuf,x,y);
+
+	return pChr->Attributes;
+
+}
+
+void DrawHLine(int _cx, int _cy, int nLength, int nDir,int attr)
+{	
+	for (int i = 0; i < nLength; i++)
+	{
+		TGE::setCharacter(pBackBuf, _cx + (i * nDir), _cy, 0x0020, attr);
+	}
+}
+
+void DrawLine(int _cx,int _cy,int nLength,double _dy)
+{
+	//int _cx, _cy;
+	//getCursorPos(&_cx, &_cy);
+	//int nLength = atoi(((char(*)[64])pObj)[1]); //±æÀÌ
+
+	double _x, _y;
+	double _dx;
+
+	_dx = 1.0;
+	_dy = _dy;
+
+	double __len = sqrt((_dx * _dx) + (_dy * _dy));
+
+	_dx /= __len;
+	_dy /= __len;
+
+	_x = (double)_cx;
+	_y = (double)_cy;
+
+	for (int i = 0; i < nLength; i++)
+	{
+		TGE::setCharacter(pBackBuf, (int)_x, (int)_y, 0x0020, getCursorAttr());
+		_x += _dx;
+		_y += _dy;
+	}
+}
 
 //-------------------
 
