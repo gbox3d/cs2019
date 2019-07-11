@@ -6,6 +6,7 @@ namespace PlayerObject {
 		double m_fXpos, m_fYpos; //위치정보
 		double m_fSpeed;
 		void* m_pMap;
+		int m_nStatus_HaveKey;
 	};
 
 	void init(void* pObj, void* pMap);

@@ -10,7 +10,8 @@ namespace PlayerObject {
 		ptrThis->m_fXpos = 0;
 		ptrThis->m_fYpos = 0;
 		ptrThis->m_fSpeed = 2.0;
-		ptrThis->m_pMap = pMap;
+		ptrThis->m_pMap = pMap;	
+		ptrThis->m_nStatus_HaveKey = 0;
 		//strcpy_s(pObj->m_szName, 64,pszName);
 	}
 
@@ -30,7 +31,9 @@ namespace PlayerObject {
 		if (TGE::input::g_KeyTable[VK_UP]) {
 			int chkX = (int)(ptrThis->m_fXpos);
 			int chkY = (int)(ptrThis->m_fYpos-1);
-			if (pMap->m_pBackBuf[chkY * 80 + chkX].Attributes == 0)
+			if (
+				(pMap->m_pBackBuf[chkY * 80 + chkX].Attributes == 0) 
+				)
 			{
 				ptrThis->m_fYpos -= _delta;
 			}
@@ -61,7 +64,39 @@ namespace PlayerObject {
 				ptrThis->m_fXpos -= _delta;
 			}
 		}
+		else if (TGE::input::g_KeyTable['G']) {
 
+			TGE::input::g_KeyTable['G'] = false;
+
+			//열쇠와 좌표가 같은지?
+			if (
+				pMap->m_posKey[0] == (int)ptrThis->m_fXpos &&
+				pMap->m_posKey[1] == (int)ptrThis->m_fYpos
+				)
+			{
+				pMap->m_nstatusKey = 0;
+				ptrThis->m_nStatus_HaveKey++;
+			}
+		}
+		else if (TGE::input::g_KeyTable['U']) {
+			
+			TGE::input::g_KeyTable['U'] = false;
+			if (ptrThis->m_nStatus_HaveKey >= 1) //열쇠를 가지고있다?
+			{
+				int _x = (int)ptrThis->m_fXpos;
+				int _y = (int)ptrThis->m_fYpos;
+				//근처에 문이있는지 검사 
+				if (
+					(pMap->m_posExit[0] == _x && pMap->m_posExit[1] == _y-1) ||
+					(pMap->m_posExit[0] == _x && pMap->m_posExit[1] == _y+1) ||
+					(pMap->m_posExit[0] == _x-1 && pMap->m_posExit[1] == _y) ||
+					(pMap->m_posExit[0] == _x+1 && pMap->m_posExit[1] == _y)
+					
+					) {
+					pMap->m_nstatusExit = 0;//문열림
+				}
+			}
+		}
 
 	}
 

@@ -15,19 +15,12 @@ int main()
 	HANDLE hStdout;
 	TGE::startTGE(&hStdout);
 
-	WorldMap::init(&g_LevelManager);
+	WorldMap::init(&g_LevelManager,"../res/level1.map");
+	
 
 	PlayerObject::init(&g_objPlayer, &g_LevelManager);
-
-	{
-		int _x, _y;
-		WorldMap::utils::findRegenPoint(&g_LevelManager,
-			&_x,
-			&_y
-		);
-		g_objPlayer.m_fXpos = _x;
-		g_objPlayer.m_fYpos = _y;
-	}
+	g_objPlayer.m_fXpos = g_LevelManager.m_posRegen[0];
+	g_objPlayer.m_fYpos = g_LevelManager.m_posRegen[1];
 
 	UINT64 _worktick = TGE::util::GetTimeMs64();
 
