@@ -3,6 +3,7 @@
 int cursor_x = 0;
 int cursor_y = 0;
 int cursorAttr = 0xf0;
+int cursorAttrSub = 0x00;
 
 CHAR_INFO* pBackBuf;
 
@@ -111,7 +112,7 @@ void endEditor()
 
 void applyEditor(HANDLE hStdout)
 {
-	if (TGE::input::g_KeyTable[VK_UP]) {
+	/*if (TGE::input::g_KeyTable[VK_UP]) {
 		cursor_y--;
 		TGE::input::g_KeyTable[VK_UP] = false;
 	}
@@ -128,15 +129,27 @@ void applyEditor(HANDLE hStdout)
 		TGE::input::g_KeyTable[VK_RIGHT] = false;
 	}
 	if (TGE::input::g_KeyTable[VK_SPACE]) {
-
 		TGE::setCharacter(pBackBuf, cursor_x, cursor_y, 0x0020, cursorAttr);
-
 		TGE::input::g_KeyTable[VK_SPACE] = false;
+	}*/
+	cursor_x = TGE::input::g_cdMousePos.X;
+	cursor_y = TGE::input::g_cdMousePos.Y;
+	//범위 체크 
+	if (cursor_x < 0) { cursor_x = 0; }
+	if (cursor_y < 0) { cursor_y = 0; }
+
+	if (cursor_x >= 80) { cursor_x = 79; }
+	if (cursor_y >= 25) { cursor_y = 24; }
+
+	if (TGE::input::g_dwButtonState == 1) {
+		TGE::setCharacter(pBackBuf, cursor_x, cursor_y, 0x0020, cursorAttr);
+	}
+	if (TGE::input::g_dwButtonState == 2) {
+		TGE::setCharacter(pBackBuf, cursor_x, cursor_y, 0x0020, cursorAttrSub);
 	}
 
-	//TGE::clearScreenBuffer(0x0020, 0x0090); //화면 클리어 
 	TGE::copyScreenBuffer(TGE::g_chiBuffer, pBackBuf);
-	TGE::setCharacter(TGE::g_chiBuffer, cursor_x, cursor_y, 0x0020, 0x00f0); //커서 출력 
+	TGE::setCharacter(TGE::g_chiBuffer, cursor_x, cursor_y, 0x0020, cursorAttr); //커서 출력 
 
 	TGE::setCursor(hStdout,0, 26);
 	printf_s("%-4d,%-4d,%-4d , %-4d", cursor_x, cursor_y, cursorAttr,
