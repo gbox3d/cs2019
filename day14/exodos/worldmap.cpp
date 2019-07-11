@@ -2,7 +2,27 @@
 #include "worldmap.h"
 
 namespace WorldMap {
-	
+
+	namespace utils {
+		void findRegenPoint(void* pObj, int* x, int* y)
+		{
+			WorldMap::S_OBJ* ptrThis = (WorldMap::S_OBJ*)pObj;
+
+			for (int i = 0; i < 2000; i++)
+			{
+				if (ptrThis->m_pBackBuf[i].Attributes == 64) {
+
+					*y = i / 80;
+					*x = i % 80;
+
+					break;
+				}
+			}
+		}
+
+	}
+
+
 	void init(void *pObj)
 	{
 		WorldMap::S_OBJ* ptrThis = (WorldMap::S_OBJ*)pObj;

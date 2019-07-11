@@ -5,8 +5,10 @@
 #include "..\..\..\cstudy\engine\tge.h"
 #include "playerObject.h"
 #include "worldmap.h"
+#include "playerObject.h"
 
 WorldMap::S_OBJ g_LevelManager;
+PlayerObject::S_OBJ g_objPlayer;
 
 int main()
 {
@@ -15,11 +17,35 @@ int main()
 
 	WorldMap::init(&g_LevelManager);
 
+	PlayerObject::init(&g_objPlayer, &g_LevelManager);
+
+	{
+		int _x, _y;
+		WorldMap::utils::findRegenPoint(&g_LevelManager,
+			&_x,
+			&_y
+		);
+		g_objPlayer.m_fXpos = _x;
+		g_objPlayer.m_fYpos = _y;
+	}
+
+	UINT64 _worktick = TGE::util::GetTimeMs64();
+
 	bool bLoop = true;
 	while (bLoop)
 	{
-		WorldMap::apply(&g_LevelManager, 0);
+		UINT64 _deltaTick = TGE::util::GetTimeMs64() - _worktick;
+		_worktick = TGE::util::GetTimeMs64();
+		double fDelta = _deltaTick / 1000.0;
+
+		//AI & action & animation(physics)
+		PlayerObject::apply(&g_objPlayer, fDelta);
+		WorldMap::apply(&g_LevelManager, fDelta);
+		
+		//Draw
 		WorldMap::draw(&g_LevelManager);
+		PlayerObject::draw(&g_objPlayer);
+
 		TGE::updateBuffer(hStdout, TGE::g_chiBuffer); //화면에 보이게..
 	}
 
