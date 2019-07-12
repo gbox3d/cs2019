@@ -25,11 +25,15 @@ int main()
 
 		TGE::setCharacter(TGE::g_chiBuffer,(int) canon.X, (int)canon.Y, 0x0020, 0x00f0);
 
+		//방향 회전
 		irr::core::vector2df _vdir = vDir;
 		_vdir.rotateBy(m_fAngle);
 		_vdir *= 4;
+		
+		//회전된 방향 적용하여 이동 시키기 
 		irr::core::vector2df _canonBall = canon;
 		_canonBall += _vdir;
+
 		TGE::setCharacter(TGE::g_chiBuffer, (int)_canonBall.X, (int)_canonBall.Y, 0x0020, 0x00c0);
 
 
