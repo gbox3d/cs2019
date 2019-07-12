@@ -28,41 +28,22 @@ namespace PlayerObject {
 
 		double _delta = (ptrThis->m_fSpeed * _fDelta);
 
-		if (TGE::input::g_KeyTable[VK_UP]) {
-			int chkX = (int)(ptrThis->m_fXpos);
-			int chkY = (int)(ptrThis->m_fYpos-1);
-			if (
-				(pMap->m_pBackBuf[chkY * 80 + chkX].Attributes == 0) 
-				)
-			{
-				ptrThis->m_fYpos -= _delta;
-			}
+		double _oldx, _oldy;
+
+		_oldx = ptrThis->m_fXpos;
+		_oldy = ptrThis->m_fYpos;
+
+		if (TGE::input::g_KeyTable[VK_UP]) {			
+			ptrThis->m_fYpos -= _delta;
 		}
 		else if (TGE::input::g_KeyTable[VK_DOWN]) {
-			int chkX = (int)(ptrThis->m_fXpos);
-			int chkY = (int)(ptrThis->m_fYpos + 1);
-			if (pMap->m_pBackBuf[chkY * 80 + chkX].Attributes == 0)
-			{
-				ptrThis->m_fYpos += _delta;
-			}
+			ptrThis->m_fYpos += _delta;
 		}
 		else if (TGE::input::g_KeyTable[VK_RIGHT]) {
-
-			int chkX = (int)(ptrThis->m_fXpos+1);
-			int chkY = (int)(ptrThis->m_fYpos);
-			if (pMap->m_pBackBuf[chkY * 80 + chkX].Attributes == 0)
-			{
-				ptrThis->m_fXpos += _delta;
-			}
-			
+			ptrThis->m_fXpos += _delta;
 		}
 		else if (TGE::input::g_KeyTable[VK_LEFT]) {
-			int chkX = (int)(ptrThis->m_fXpos - 1);
-			int chkY = (int)(ptrThis->m_fYpos);
-			if (pMap->m_pBackBuf[chkY * 80 + chkX].Attributes == 0)
-			{
-				ptrThis->m_fXpos -= _delta;
-			}
+			ptrThis->m_fXpos -= _delta;
 		}
 		else if (TGE::input::g_KeyTable['G']) {
 
@@ -77,6 +58,7 @@ namespace PlayerObject {
 				pMap->m_nstatusKey = 0;
 				ptrThis->m_nStatus_HaveKey++;
 			}
+			
 		}
 		else if (TGE::input::g_KeyTable['U']) {
 			
@@ -97,7 +79,25 @@ namespace PlayerObject {
 				}
 			}
 		}
+		
+		//막힌곳인가?
+		if (pMap->m_pBackBuf[(int)ptrThis->m_fYpos * 80 + (int)ptrThis->m_fXpos].Attributes == 240 ||
+			pMap->m_pBackBuf[(int)ptrThis->m_fYpos * 80 + (int)ptrThis->m_fXpos].Attributes == 144 
+			)
+		{
+			ptrThis->m_fXpos = _oldx;
+			ptrThis->m_fYpos = _oldy;
 
+		}
+		//문이있는가?
+		else if ( pMap->m_posExit[0] == (int)ptrThis->m_fXpos && pMap->m_posExit[1] == (int)ptrThis->m_fYpos)
+		{
+			if (pMap->m_nstatusExit) {
+				ptrThis->m_fXpos = _oldx;
+				ptrThis->m_fYpos = _oldy;
+			}
+
+		}
 	}
 
 	void draw(void* pObj)
