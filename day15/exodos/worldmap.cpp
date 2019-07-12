@@ -22,37 +22,54 @@ namespace WorldMap {
 	}
 
 
-	void init(void *pObj,const char *szMapFile)
+	void init(void *pObj)
 	{
 		WorldMap::S_OBJ* ptrThis = (WorldMap::S_OBJ*)pObj;
 
 		ptrThis->m_pBackBuf = TGE::CreateScreenBuffer();
-		TGE::loadBufferBinary(ptrThis->m_pBackBuf, szMapFile);
+		
+		
+	}
+
+	int readWorldData(void* pObj,const char* szMapFile,int nLevel)
+	{
+		WorldMap::S_OBJ* ptrThis = (WorldMap::S_OBJ*)pObj;
+		if (TGE::loadBufferBinary(ptrThis->m_pBackBuf, szMapFile) != 0)
+		{
+			return -1;
+		}
 
 		//멥데이터 분석 
 		for (int i = 0; i < 2000; i++)
 		{
-			if (ptrThis->m_pBackBuf[i].Attributes == 64) {
+			if (ptrThis->m_pBackBuf[i].Attributes == 64) { // 시작위치 
 
 				ptrThis->m_posRegen[0] = i % 80;
 				ptrThis->m_posRegen[1] = i / 80;
-				ptrThis->m_pBackBuf[i].Attributes = 0x00;				
+				ptrThis->m_pBackBuf[i].Attributes = 0x00;
 			}
-			else if (ptrThis->m_pBackBuf[i].Attributes == 160) {
+			else if (ptrThis->m_pBackBuf[i].Attributes == 160) { // 열쇠
 				ptrThis->m_posKey[0] = i % 80;
 				ptrThis->m_posKey[1] = i / 80;
 				ptrThis->m_nstatusKey = 1;
 				ptrThis->m_pBackBuf[i].Attributes = 0x00;
 			}
-			else if (ptrThis->m_pBackBuf[i].Attributes == 192) {
+			else if (ptrThis->m_pBackBuf[i].Attributes == 192) { //비상구
 				ptrThis->m_posExit[0] = i % 80;
 				ptrThis->m_posExit[1] = i / 80;
 				ptrThis->m_nstatusExit = 1;
 				ptrThis->m_pBackBuf[i].Attributes = 0x00;
 			}
+			else if (ptrThis->m_pBackBuf[i].Attributes == 128) { //포탈
+				ptrThis->m_posPortal[0] = i % 80;
+				ptrThis->m_posPortal[1] = i / 80;
+				//ptrThis->m_pBackBuf[i].Attributes = 0x00;
+			}
 		}
-		
-		ptrThis->m_nLevel = 0;
+
+		ptrThis->m_nLevel = nLevel;
+
+		return 0;
 	}
 
 	void release(void* pObj)

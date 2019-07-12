@@ -3,6 +3,8 @@
 #include "worldmap.h"
 #include "playerObject.h"
 
+extern int g_nFsm;
+
 namespace PlayerObject {
 	void init(void* pObj, void* pMap)
 	{
@@ -96,8 +98,14 @@ namespace PlayerObject {
 				ptrThis->m_fXpos = _oldx;
 				ptrThis->m_fYpos = _oldy;
 			}
-
 		}
+
+		//Æ÷Å»¿¡ µé¾î°¬´Â°¡?
+		if (pMap->m_posPortal[0] == (int)ptrThis->m_fXpos && pMap->m_posPortal[1] == (int)ptrThis->m_fYpos)
+		{
+			g_nFsm = 20;
+		}
+
 	}
 
 	void draw(void* pObj)

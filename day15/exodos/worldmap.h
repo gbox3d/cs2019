@@ -13,6 +13,8 @@ namespace WorldMap {
 		int m_posExit[2];
 		int m_nstatusExit;
 
+		int m_posPortal[2];
+
 	};
 
 
@@ -20,7 +22,8 @@ namespace WorldMap {
 		void findRegenPoint(void* pObj, int* x, int* y);
 	}
 
-	void init(void* pObj, const char* szMapFile);
+	void init(void* pObj);
+	int readWorldData(void* pObj, const char* szMapFile, int nLevel);
 	void release(void* pObj);
 	void apply(void* pObj, double fDelat);
 	void draw(void* pObj);
