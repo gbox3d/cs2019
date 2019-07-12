@@ -11,6 +11,14 @@ WorldMap::S_OBJ g_LevelManager;
 PlayerObject::S_OBJ g_objPlayer;
 
 int g_nFsm; //유한 상태기계(오토마타 )
+
+const char* g_szLevels[256] = {
+	"../res/level1.map",
+	"../res/level2.map"
+};
+
+int g_nCurrentLevel = 0;
+
 int main()
 {
 	HANDLE hStdout;
@@ -24,6 +32,7 @@ int main()
 	UINT64 _worktick = TGE::util::GetTimeMs64();
 
 	g_nFsm = 0;
+
 
 	bool bLoop = true;
 	while (bLoop)
@@ -41,12 +50,13 @@ int main()
 			if (TGE::input::g_KeyTable[VK_SPACE]) {
 				TGE::input::g_KeyTable[VK_SPACE] = false;
 				g_nFsm = 1; 
+				g_nCurrentLevel = 0;
 			}
 		}	
 			break;
 		case 1:
 		{
-			WorldMap::readWorldData(&g_LevelManager, "../res/level1.map", 0);
+			WorldMap::readWorldData(&g_LevelManager, g_szLevels[g_nCurrentLevel], g_nCurrentLevel);
 			g_objPlayer.m_fXpos = g_LevelManager.m_posRegen[0];
 			g_objPlayer.m_fYpos = g_LevelManager.m_posRegen[1];
 			g_nFsm = 10;
@@ -72,15 +82,24 @@ int main()
 		}
 		break;
 		case 21:
-		{
+		{ //다음 레벨로 가기 
 			if ( TGE::input::g_KeyTable[VK_SPACE] ) {
-
-				WorldMap::readWorldData(&g_LevelManager, "../res/level2.map", 1);
-				g_objPlayer.m_fXpos = g_LevelManager.m_posRegen[0];
-				g_objPlayer.m_fYpos = g_LevelManager.m_posRegen[1];
-				g_nFsm = 10;
-
+				g_nCurrentLevel++;
+				if (g_nCurrentLevel >= 2) {
+					g_nFsm = 100; //game over
+				}
+				else {
+					g_nFsm = 1;
+				}
 			}
+		}
+			break;
+		case 100:
+		{
+			TGE::setCursor(hStdout, 0, 25);
+			puts("     탈출 성공                             ");
+
+			g_nFsm = 101; // 대기상태
 		}
 			break;
 		default:
