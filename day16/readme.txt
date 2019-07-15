@@ -48,6 +48,16 @@ define 구문에따른 컴파일러 로직제어 구문
 exam5  win32 사칙연산 계산기
 
 InvalidateRect => WM_PAINT 메씨지 발생 
+--------------------------------------------------
+exam6 
+dialogBox
+.rc => Dialog 폴더
+
+hWnd -> dialog
+hWnd-> WndProc
+AboutDialog ->About
+
+
 
 
 
