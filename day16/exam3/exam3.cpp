@@ -1,8 +1,8 @@
-﻿// exam2.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+﻿// exam3.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
-#include "exam2.h"
+#include "exam3.h"
 
 #define MAX_LOADSTRING 100
 
@@ -29,7 +29,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_EXAM2, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_EXAM3, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -38,7 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EXAM2));
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EXAM3));
 
     MSG msg;
 
@@ -73,10 +73,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EXAM2));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EXAM3));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_EXAM2);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_EXAM3);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -105,17 +105,18 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   
-   CreateWindow(L"edit", NULL, WS_CHILD | WS_VISIBLE | WS_BORDER | CBS_AUTOHSCROLL,
-	   0, 128, 256, 32,
+   CreateWindow(L"edit", NULL,
+	   WS_CHILD | WS_VISIBLE | WS_BORDER | CBS_AUTOHSCROLL,
+	   0, 0, 256, 32,
+	   hWnd, (HMENU)1001, hInst, NULL
+   );
+
+   CreateWindow(L"button", L"Ok", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+	   0, 64, 64, 16,
 	   hWnd, (HMENU)1002, hInst, NULL
    );
 
-   CreateWindow(L"button",L"클릭하세요",
-	   WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,
-	   0,64,128,32,
-	   hWnd,(HMENU)1001,hInst,NULL
-	   );
+
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
@@ -143,15 +144,37 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 메뉴 선택을 구문 분석합니다:
             switch (wmId)
             {
-			case 1001:
+			case 1002:
 			{
-				HDC dc = GetDC(hWnd);
+				HDC hDC = GetDC(hWnd);
 
-				TCHAR  szBuf[256];
-				GetWindowText(GetDlgItem(hWnd, 1002), szBuf, sizeof(szBuf) / sizeof(TCHAR));
+				TCHAR szBuf[256];
 
-				TextOut(dc,0,0,szBuf,wcslen(szBuf));
-				ReleaseDC(hWnd, dc);
+				GetWindowText(GetDlgItem(hWnd, 1001), szBuf, sizeof(szBuf));
+				int _data = _wtoi(szBuf); //문자열데이터를 정수로 변환 
+
+
+				TCHAR szTemp[256];
+				swprintf_s(szTemp, L"%d", _data);
+				TextOut(hDC, 0, 200, szTemp, wcslen(szTemp));
+
+				TCHAR szTemp2[256];
+
+				for (int i = 0; i < 32; i++) {
+					int _bitShift = (_data << i);
+					if (_bitShift & 0x80000000) { // 1000 0000 ..... 32bit
+						szTemp2[i] = L'1';
+					}
+					else {
+						szTemp2[i] = L'0';
+					}
+				}
+				szTemp2[32] = L'\x00';
+
+				TextOut(hDC, 0, 232, szTemp2, wcslen(szTemp2));
+
+				ReleaseDC(hWnd,hDC);
+
 			}
 				break;
             case IDM_ABOUT:
