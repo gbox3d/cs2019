@@ -1,14 +1,10 @@
-﻿// exam4.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+﻿// exam5.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
-#include "exam4.h"
-
-//#define MY_DEBUG 1
+#include "exam5.h"
 
 #define MAX_LOADSTRING 100
-
-
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
@@ -33,7 +29,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_EXAM4, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_EXAM5, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -42,7 +38,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EXAM4));
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EXAM5));
 
     MSG msg;
 
@@ -77,10 +73,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EXAM4));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EXAM5));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_EXAM4);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_EXAM5);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -109,6 +105,32 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
+   //입력창 만들기 
+   CreateWindow(L"static", L"숫자를 입력하세요.", WS_CHILD | WS_VISIBLE,
+	   0, 0, 196, 16, hWnd, (HMENU)-1, hInst, NULL);
+   
+   CreateWindow(L"edit", NULL,
+	   WS_CHILD | WS_VISIBLE | WS_BORDER | CBS_AUTOHSCROLL,
+	   0, 32, 256, 20,
+	   hWnd, (HMENU)1001, hInst, NULL
+   );
+   CreateWindow(L"edit", NULL,
+	   WS_CHILD | WS_VISIBLE | WS_BORDER | CBS_AUTOHSCROLL,
+	   0, 64, 256, 20,
+	   hWnd, (HMENU)1002, hInst, NULL
+   );
+   //+ - / * 버튼 만들기 
+   CreateWindow(L"button", L"+",
+	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+	   0, 96, 64, 32,
+	   hWnd, (HMENU)1003, hInst, NULL
+   );
+   CreateWindow(L"button", L"-",
+	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+	   64, 96, 64, 32,
+	   hWnd, (HMENU)1004, hInst, NULL
+   );
+
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
@@ -125,8 +147,17 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+int nums[3];
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	
+	TCHAR szTemp[256];
+
+	GetWindowText(GetDlgItem(hWnd, 1001), szTemp, sizeof(szTemp) / sizeof(TCHAR));
+	nums[0] = _wtoi(szTemp);
+	GetWindowText(GetDlgItem(hWnd, 1002), szTemp, sizeof(szTemp) / sizeof(TCHAR));
+	nums[1] = _wtoi(szTemp);
+
     switch (message)
     {
     case WM_COMMAND:
@@ -135,6 +166,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 메뉴 선택을 구문 분석합니다:
             switch (wmId)
             {
+			case 1003://+
+			{
+				nums[2] = nums[0] + nums[1];
+				InvalidateRect(hWnd, NULL, TRUE);
+			}
+				break;
+			case 1004: //-
+			{
+				nums[2] = nums[0] - nums[1];
+				InvalidateRect(hWnd, NULL, TRUE);
+			}
+				break;
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
@@ -151,34 +194,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
-			/*
-			1000 | 0100 | 0010 = 1110
-			*/
-			int flag = WS_POPUP | WS_CHILD | WS_MINIMIZE;
-			//flag = WS_CHILD;
-
-			TCHAR szTemp2[256];
-			for (int i = 0; i < 32; i++) {
-				int _bitShift = (flag << i);
-				if (_bitShift & 0x80000000) { // 1000 0000 ..... 32bit
-					szTemp2[i] = L'1';
-				}
-				else {
-					szTemp2[i] = L'0';
-				}
-			}
-			szTemp2[32] = L'\x00';
-			TextOut(hdc, 0, 0, szTemp2,wcslen(szTemp2));
-
-			swprintf_s(szTemp2, sizeof(szTemp2)/sizeof(TCHAR),L"%d", MAX_LOADSTRING);
-			TextOut(hdc, 0, 16, szTemp2, wcslen(szTemp2));
-
-#ifdef MY_DEBUG
-			OutputDebugString(L"debug 예제 \n");
-#endif
-
-
+			swprintf_s(szTemp, sizeof(szTemp) / sizeof(TCHAR), L"결과는 : %d", nums[2]);
+			
+			TextOut(hdc, 200, 100, szTemp, wcslen(szTemp));
+			
             EndPaint(hWnd, &ps);
         }
         break;
