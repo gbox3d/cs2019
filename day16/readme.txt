@@ -13,3 +13,7 @@ API => 커널과 통신하기위한것들의 모음 ,C/c++ =>C#,
 메뉴 만들기=> 리소스 폴더 => .rc 클릭
 => menu 폴더 => IDC_EXAM1 클릭
 => 메뉴 편집 => 속성(우측하단)
+
+win32 GUI => 컨트롤 => CreateWindow
+GetDlgItem
+WM_COMMAND
