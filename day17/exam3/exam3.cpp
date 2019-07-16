@@ -129,9 +129,11 @@ LRESULT CALLBACK testWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 	{
 	case WM_CHAR:
 	{
+#ifdef DEBUG
 		TCHAR szBuf[256];
 		swprintf_s(szBuf, sizeof(szBuf) / sizeof(TCHAR), L"key : %8d \n", wParam);
 		OutputDebugString(szBuf);
+#endif
 		if (wParam < '0' || wParam > '9' ) return 0;
 	}
 		break;
