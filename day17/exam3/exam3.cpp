@@ -122,28 +122,20 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 //
 HWND testWnd;
+WNDPROC oldEditProc;
 LRESULT CALLBACK testWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
-	/*case WM_KEYDOWN:
+	case WM_CHAR:
 	{
 		TCHAR szBuf[256];
-		swprintf_s(szBuf, sizeof(szBuf) / sizeof(TCHAR), L"%8d", wParam);
+		swprintf_s(szBuf, sizeof(szBuf) / sizeof(TCHAR), L"key : %8d \n", wParam);
 		OutputDebugString(szBuf);
+		if (wParam < '0' || wParam > '9' ) return 0;
 	}
-		break;*/
-	case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
-		// TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-		TextOut(hdc, 0, 0, L"hello subclsing", wcslen(L"hello subclsing"));
-		MoveToEx(hdc, 5, 10, NULL);
-		LineTo(hdc, 128, 10);
-		EndPaint(hWnd, &ps);
-	}
-	break;
+		break;
+	
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
@@ -151,7 +143,7 @@ LRESULT CALLBACK testWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
 		break;
 	}
 
-	return DefWindowProc(hWnd, message, wParam, lParam);
+	return CallWindowProc(oldEditProc,hWnd, message, wParam, lParam);
 }
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -159,11 +151,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
 	case WM_CREATE:
 	{
-		testWnd = CreateWindow(L"static", NULL, 
-			WS_CHILD | WS_VISIBLE ,
+		testWnd = CreateWindow(L"edit", NULL, 
+			WS_CHILD | WS_VISIBLE | WS_BORDER ,
 			10, 10, 128, 20, hWnd, (HMENU)1001, hInst, NULL);
-		//SetFocus(testWnd);
-		SetWindowLong(testWnd, GWL_WNDPROC, (LONG)testWndProc);
+		SetFocus(testWnd);
+		oldEditProc = (WNDPROC)SetWindowLong(testWnd, GWL_WNDPROC, (LONG)testWndProc);
 
 		CreateWindow(L"static", L"hello basic",
 			WS_CHILD | WS_VISIBLE,
