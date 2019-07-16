@@ -18,25 +18,32 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-
+int g_nRenderFsm = 0; //0:stop ,1 :line ,2:rect
 void OnGdiPlusRender(double fDelta, Graphics* pGrp)
 {
-	Gdiplus::Pen penObj(Color(0, 0, 0));
-
-	penObj.SetColor(Color(rand()%256,rand()%256,rand()%256));
-	pGrp->DrawLine(&penObj, rand()%320, rand()%240, rand()%320, rand()%240);
-
-	penObj.SetColor(Color(rand() % 256, rand() % 256, rand() % 256));
-	pGrp->DrawRectangle(&penObj, 
-		Gdiplus::Rect(rand() % 320, rand() % 240, rand() % 320, rand() % 240));
-
-	Gdiplus::SolidBrush brushObj(Color(0,0,0));
 	
-	brushObj.SetColor(Color(rand() % 256, rand() % 256, rand() % 256));
+	Gdiplus::Pen penObj(Color(0, 0, 0));
+	Gdiplus::SolidBrush brushObj(Color(0, 0, 0));
+	switch (g_nRenderFsm)
+	{
+	case 0://stop
+		break;
+	case 1://line
+		penObj.SetColor(Color(rand() % 256, rand() % 256, rand() % 256));
+		pGrp->DrawLine(&penObj, rand() % 320, rand() % 240, rand() % 320, rand() % 240);
+		break;
+	case 2: //rect
+		penObj.SetColor(Color(rand() % 256, rand() % 256, rand() % 256));
+		pGrp->DrawRectangle(&penObj,
+			Gdiplus::Rect(rand() % 320, rand() % 240, rand() % 320, rand() % 240));
+		break;
+	default:
+		break;
+	}
+	/*brushObj.SetColor(Color(rand() % 256, rand() % 256, rand() % 256));
 	pGrp->FillRectangle(&brushObj,
 		Gdiplus::Rect(rand() % 320, rand() % 240, rand() % 320, rand() % 240));
-
-
+		*/
 
 }
 
@@ -66,9 +73,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
-    // 기본 메시지 루프입니다:
-	plusEngine::GDIPLUS_Loop(msg, Rect(0, 0, 320, 240), NULL, NULL, OnGdiPlusRender,NULL);
     
+	plusEngine::GDIPLUS_Loop(msg, Rect(0, 0, 320, 240), NULL, NULL, OnGdiPlusRender,NULL);
 
     return (int) msg.wParam;
 }

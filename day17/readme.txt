@@ -36,6 +36,9 @@ framework.h 에 추가(순서 주의)
 #include "..\\..\\..\\cstudy\engine\irrlicht\include\irrlicht.h"
 #include "..\\..\\..\\cstudy\engine\plusEngine.h"
 
+winMain 함수의 메씨지 루프부분을 다음으로 교체
+plusEngine::GDIPLUS_Loop(.....)
+
 -------------------------------------------
 
 
