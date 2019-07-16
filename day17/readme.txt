@@ -21,8 +21,27 @@ HIBYTE => 상위 8비트
 -----------------------------------------------------
 exam3
 서브 클래싱
+-------------------------------------------
+exam4
+GDI+
+device context => 윈도우에 그리기 기능을 수행하기위한 오브잭트 
+=>선,점, 체우기 도형,폰트 , 이미지 등등
+필요 모듈 => Gdiplus.lib 
+
+plus엔진 사용하기
+
+plusengine.h plusengine.cpp
+
+framework.h 에 추가(순서 주의)
+#include "..\\..\\..\\cstudy\engine\irrlicht\include\irrlicht.h"
+#include "..\\..\\..\\cstudy\engine\plusEngine.h"
 
 -------------------------------------------
+
+
+
+
+
 
 
 
