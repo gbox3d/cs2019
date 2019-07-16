@@ -21,21 +21,48 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 int g_nRenderFsm = 0; //0:stop ,1 :line ,2:rect
 void OnGdiPlusRender(double fDelta, Graphics* pGrp)
 {
-	
 	Gdiplus::Pen penObj(Color(0, 0, 0));
 	Gdiplus::SolidBrush brushObj(Color(0, 0, 0));
+	penObj.SetColor(Color(rand() % 256, rand() % 256, rand() % 256));
+
+	penObj.SetWidth( (double)(rand()%1000 / 200.0) );
+	brushObj.SetColor(Color(rand() % 256, rand() % 256, rand() % 256));
+
+	static double _accTick = 0;
+	_accTick += fDelta;
+
+	if (_accTick < 1.0 && _accTick >= 0) {
+		return;
+	}
+	else {
+		_accTick = 0;
+	}
+
 	switch (g_nRenderFsm)
 	{
 	case 0://stop
 		break;
 	case 1://line
-		penObj.SetColor(Color(rand() % 256, rand() % 256, rand() % 256));
+		
 		pGrp->DrawLine(&penObj, rand() % 320, rand() % 240, rand() % 320, rand() % 240);
 		break;
 	case 2: //rect
-		penObj.SetColor(Color(rand() % 256, rand() % 256, rand() % 256));
+		
 		pGrp->DrawRectangle(&penObj,
 			Gdiplus::Rect(rand() % 320, rand() % 240, rand() % 320, rand() % 240));
+		break;
+	case 3:
+		pGrp->FillEllipse(&brushObj, Rect(rand() % 320, rand() % 240, rand() % 320, rand() % 240));
+		break;
+	case 4:
+	{
+		Gdiplus::Point pts[3];
+		for (int i = 0; i < 3; i++) {
+			pts[i].X = rand() % 320;
+			pts[i].Y = rand() % 240;
+		}
+		pGrp->DrawPolygon(&penObj, pts, 3);
+	}		
 		break;
 	default:
 		break;
@@ -155,6 +182,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // 메뉴 선택을 구문 분석합니다:
             switch (wmId)
             {
+			case IDM_DRAW_LINE:
+				g_nRenderFsm = 1;
+				break;
+			case IDM_DRAW_RECT:
+				g_nRenderFsm = 2;
+				break;
+			case IDM_DRAW_STOP:
+				g_nRenderFsm = 0;
+				break;
+			case IDM_DRAW_CIRCLE:
+				g_nRenderFsm = 3;
+				break;
+			case IDM_DRAW_PLYOGON:
+				g_nRenderFsm = 4;
+				break;
+
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
