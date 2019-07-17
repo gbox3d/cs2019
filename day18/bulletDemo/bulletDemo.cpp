@@ -26,8 +26,12 @@ BulletObject::S_OBJ g_bullets[256];
 
 void OnGdiplusRender(double fDelta, Graphics * pGrp)
 {
-	for (int i = 0; i < 256; i++) {
-		BulletObject::apply(&g_bullets[i], fDelta); //위치 변환(애니메이션)
+	if (fDelta > 0)
+	{
+		for (int i = 0; i < 256; i++) {
+			BulletObject::apply(&g_bullets[i], fDelta); //위치 변환(애니메이션)
+		}
+
 	}
 
 
@@ -160,11 +164,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		for (int i = 0; i < 256; i++)
 		{
-			if (g_bullets[i].m_nFsm == 0) {
+			if (g_bullets[i].m_nStatus == BulletObject::SLEEP) { //탄발사 
+
 				g_bullets[i].m_nFsm = 10;
+				g_bullets[i].m_nStatus = BulletObject::WAKE;
 				g_bullets[i].m_pos = irr::core::vector2df(0, 0);
 
-				g_bullets[i].m_fAngle = rand() % 360;
+				g_bullets[i].m_fAngle = (irr::f32)(rand() % 360);	
+				g_bullets[i].m_fSpeed = 50.0 + (irr::f32)(rand() % 50);
 
 				break;
 			}
