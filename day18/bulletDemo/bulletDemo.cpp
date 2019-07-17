@@ -1,8 +1,8 @@
-﻿// exam6.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+﻿// bulletDemo.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
-#include "exam6.h"
+#include "bulletDemo.h"
 
 #define MAX_LOADSTRING 100
 
@@ -17,10 +17,8 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-
 #define SCREEN_W 512
 #define SCREEN_H 512
-//const int SCREEN_W = 640;
 
 void OnGdiplusRender(double fDelta, Graphics * pGrp)
 {
@@ -30,26 +28,7 @@ void OnGdiplusRender(double fDelta, Graphics * pGrp)
 	pGrp->DrawLine(&_pen, 0, SCREEN_H / 2, SCREEN_W, SCREEN_H / 2);
 	pGrp->DrawLine(&_pen, SCREEN_W / 2, 0, SCREEN_W / 2, SCREEN_H);
 
-	Gdiplus::Matrix _mat;
-	Gdiplus::Matrix _mat2;
-	_mat.Reset();
-	_mat2.Reset();
-
-	//pGrp->TranslateTransform(SCREEN_W / 2, SCREEN_H / 2);
-
-	_mat.Translate(SCREEN_W / 2, SCREEN_H / 2);
-	_mat2.Rotate(45);
-
-	_mat.Multiply(&_mat2); // _mat = _mat * _mat2;
-
-	pGrp->SetTransform(&_mat);
-
-
-	pGrp->DrawRectangle(&_pen, Rect(-8, -8, 96, 16));
-
-	pGrp->ResetTransform();
 }
-
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -63,7 +42,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_EXAM6, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_BULLETDEMO, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -72,14 +51,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EXAM6));
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BULLETDEMO));
 
     MSG msg;
-
 	plusEngine::GDIPLUS_Loop(msg, Rect(0, 0, SCREEN_W, SCREEN_H), 
 		NULL, NULL, OnGdiplusRender, NULL);
-
-
+    
     return (int) msg.wParam;
 }
 
@@ -101,10 +78,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EXAM6));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_BULLETDEMO));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_EXAM6);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_BULLETDEMO);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
