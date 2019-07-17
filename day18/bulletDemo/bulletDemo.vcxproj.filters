@@ -30,6 +30,9 @@
     <ClInclude Include="..\..\..\cstudy\engine\plusEngine.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="bulletObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bulletDemo.cpp">

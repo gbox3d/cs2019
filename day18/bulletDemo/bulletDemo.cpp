@@ -4,6 +4,8 @@
 #include "framework.h"
 #include "bulletDemo.h"
 
+#include "bulletObject.h"
+
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -20,13 +22,29 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 #define SCREEN_W 512
 #define SCREEN_H 512
 
+BulletObject::S_OBJ g_bullets[256];
+
 void OnGdiplusRender(double fDelta, Graphics * pGrp)
 {
+	for (int i = 0; i < 256; i++) {
+		BulletObject::apply(&g_bullets[i], fDelta); //위치 변환(애니메이션)
+	}
+
+
 	Pen _pen(Color(255, 255, 255));
 	pGrp->Clear(Color(0, 0, 0));
 
 	pGrp->DrawLine(&_pen, 0, SCREEN_H / 2, SCREEN_W, SCREEN_H / 2);
 	pGrp->DrawLine(&_pen, SCREEN_W / 2, 0, SCREEN_W / 2, SCREEN_H);
+
+	pGrp->TranslateTransform(SCREEN_W/2,SCREEN_H/2);
+
+	for (int i = 0; i < 256; i++) {
+		BulletObject::render(&g_bullets[i], pGrp); //화면 출력 
+	}
+	
+
+	pGrp->ResetTransform();
 
 }
 
@@ -52,6 +70,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_BULLETDEMO));
+
+	for (int i = 0; i < 256; i++)
+	{
+		BulletObject::init(&g_bullets[i]);
+		g_bullets[i].m_pos = irr::core::vector2df(0, 0);
+		g_bullets[i].m_fSpeed = 25.0;
+	}
 
     MSG msg;
 	plusEngine::GDIPLUS_Loop(msg, Rect(0, 0, SCREEN_W, SCREEN_H), 
@@ -130,6 +155,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
+	case WM_LBUTTONDOWN:
+
+	{
+		for (int i = 0; i < 256; i++)
+		{
+			if (g_bullets[i].m_nFsm == 0) {
+				g_bullets[i].m_nFsm = 10;
+				g_bullets[i].m_pos = irr::core::vector2df(0, 0);
+
+				g_bullets[i].m_fAngle = rand() % 360;
+
+				break;
+			}
+		}
+	}
+		
+		
+		break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
