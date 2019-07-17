@@ -1,8 +1,8 @@
-﻿// exam1.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+﻿// exam2.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
-#include "exam1.h"
+#include "exam2.h"
 
 #define MAX_LOADSTRING 100
 
@@ -19,15 +19,42 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 #define SCREEN_W 512
 #define SCREEN_H 512
-//const int SCREEN_W = 640;
 
-void OnGdiplusRender(double fDelta,Graphics *pGrp)
+void OnGdiplusRender(double fDelta, Graphics * pGrp)
 {
 	Pen _pen(Color(255, 255, 255));
 	pGrp->Clear(Color(0, 0, 0));
 
 	pGrp->DrawLine(&_pen, 0, SCREEN_H / 2, SCREEN_W, SCREEN_H / 2);
-	pGrp->DrawLine(&_pen, SCREEN_W/2,0,SCREEN_W/2,SCREEN_H);
+	pGrp->DrawLine(&_pen, SCREEN_W / 2, 0, SCREEN_W / 2, SCREEN_H);
+
+	Point _pts[3] = {
+		{0,0},
+		{0,25},
+		{25,0}	
+	};
+	
+	pGrp->TranslateTransform(SCREEN_W/2, SCREEN_H/2);
+	pGrp->RotateTransform(45);
+	pGrp->ScaleTransform(2,2);
+
+	Gdiplus::GraphicsState _status = pGrp->Save();
+
+	pGrp->DrawPolygon(&_pen, _pts, 3);
+
+	pGrp->TranslateTransform(-50, 0);
+	pGrp->DrawPolygon(&_pen, _pts, 3);
+
+	pGrp->TranslateTransform(100, 0);
+	pGrp->DrawPolygon(&_pen, _pts, 3);
+
+	pGrp->Restore(_status);
+	pGrp->TranslateTransform(100, 0);
+	pGrp->DrawPolygon(&_pen, _pts, 3);
+
+	
+
+	pGrp->ResetTransform();
 
 }
 
@@ -43,7 +70,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_EXAM1, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_EXAM2, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -52,11 +79,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EXAM1));
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EXAM2));
 
     MSG msg;
 
-	plusEngine::GDIPLUS_Loop(msg, Rect(0, 0, SCREEN_W, SCREEN_H), NULL, NULL, OnGdiplusRender, NULL);
+	plusEngine::GDIPLUS_Loop(msg, Rect(0,0,SCREEN_W,SCREEN_H),
+		NULL,NULL,OnGdiplusRender,NULL
+	);
+    
 
     return (int) msg.wParam;
 }
@@ -79,10 +109,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EXAM1));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EXAM2));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_EXAM1);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_EXAM2);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
