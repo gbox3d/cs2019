@@ -9,7 +9,7 @@
 
 #pragma comment(lib,"ws2_32.lib")
 
-#define SERVER "192.168.0.19"
+#define SERVER "192.168.0.15"
 #define BUFLEN 512
 #define PORT 3333
 
