@@ -5,6 +5,7 @@ var udp_scoket = dgram.createSocket("udp4");
 
 console.log("wait message....");
 udp_scoket.on("message",function(msg,rinfo) {
+  console.log(rinfo.address);
   console.log(msg)
 });
 

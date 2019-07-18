@@ -9,7 +9,7 @@
 
 #pragma comment(lib,"ws2_32.lib")
 
-#define SERVER "192.168.0.15"
+#define SERVER "192.168.0.19"
 #define BUFLEN 512
 #define PORT 3333
 
@@ -36,7 +36,7 @@ int main()
 
 	memset((char*)& si_other, 0, slen);
 
-	InetPton(AF_INET, L"192.168.0.15", &si_other.sin_addr.s_addr);
+	InetPton(AF_INET, TEXT(SERVER), &si_other.sin_addr.s_addr);
 	//si_other.sin_addr.S_un.S_addr = inet_addr(SERVER);
 	si_other.sin_family = AF_INET;
 	si_other.sin_port = htons(PORT);
