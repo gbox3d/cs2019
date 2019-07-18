@@ -1,8 +1,8 @@
-﻿// exam1.cpp : 애플리케이션에 대한 진입점을 정의합니다.
+﻿// exam2.cpp : 애플리케이션에 대한 진입점을 정의합니다.
 //
 
 #include "framework.h"
-#include "exam1.h"
+#include "exam2.h"
 
 #define MAX_LOADSTRING 100
 
@@ -20,7 +20,10 @@ INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 #define SCREEN_W 512
 #define SCREEN_H 512
 
-irr::core::vector2df testPt = { -100,100 };
+irr::core::line2df g_lines[2] = {
+	{{-100,-100},{100,100}},
+	{{-50,150},{-20,-200}},
+};
 
 void OnRender(irr::f64 fDelta, Graphics* pGrp)
 {
@@ -32,33 +35,27 @@ void OnRender(irr::f64 fDelta, Graphics* pGrp)
 
 	pGrp->TranslateTransform(SCREEN_W / 2, SCREEN_H / 2);
 
-	irr::core::vector2df pts[2] = { {-100,-100},{100,100} };
-	
-
-	irr::core::line2df line1 = irr::core::line2df(pts[0], pts[1]);
-
-	//pGrp->DrawLine(&_pen, pts[0].X, pts[0].Y, pts[1].X, pts[1].Y);
-	pGrp->DrawLine(&_pen, 
-		line1.start.X,line1.start.Y,
-		line1.end.X,line1.end.Y);
-
-	GraphicsState _gs = pGrp->Save();
-
-	if (line1.getPointOrientation(testPt) > 0)
-	{
-		_pen.SetColor(Color::Red);
-	}
-	else {
-		_pen.SetColor(Color::Green);
+	for (int i = 0; i < 2; i++) {
+		pGrp->DrawLine(&_pen,
+			g_lines[i].start.X, g_lines[i].start.Y,
+			g_lines[i].end.X, g_lines[i].end.Y
+		);
 	}
 
-	pGrp->TranslateTransform(testPt.X, testPt.Y);
-	pGrp->DrawEllipse(&_pen,Rect(-8,-8,16,16) );
-	pGrp->Restore(_gs);
+	irr::core::vector2df crossPoint;
+
+	GraphicsState _gs;
+	if (g_lines[0].intersectWith(g_lines[1], crossPoint)) {
+		_gs = pGrp->Save();
+
+		pGrp->TranslateTransform(crossPoint.X, crossPoint.Y);
+		pGrp->DrawEllipse(&_pen, Rect(-8, -8, 16, 16));
+
+		pGrp->Restore(_gs);
+	}
+
 
 	pGrp->ResetTransform();
-
-
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
@@ -73,7 +70,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_EXAM1, szWindowClass, MAX_LOADSTRING);
+    LoadStringW(hInstance, IDC_EXAM2, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
@@ -82,11 +79,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EXAM1));
+    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EXAM2));
 
     MSG msg;
+
 	plusEngine::GDIPLUS_Loop(msg, Rect(0, 0, SCREEN_W, SCREEN_H),
-		NULL, NULL,OnRender, NULL);
+		NULL, NULL, OnRender, NULL);
 
     return (int) msg.wParam;
 }
@@ -109,10 +107,10 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.cbClsExtra     = 0;
     wcex.cbWndExtra     = 0;
     wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EXAM1));
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_EXAM2));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_EXAM1);
+    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_EXAM2);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -162,10 +160,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
 	case WM_LBUTTONDOWN:
-
-		testPt.X = (irr::f32)LOWORD(lParam) - SCREEN_W/2;
-		testPt.Y = (irr::f32)HIWORD(lParam) - SCREEN_H/2;
-
+		g_lines[1].end.X = (irr::f32)(LOWORD(lParam)) - SCREEN_W/2;
+		g_lines[1].end.Y = (irr::f32)(HIWORD(lParam)) - SCREEN_H/2;
 		break;
     case WM_COMMAND:
         {
