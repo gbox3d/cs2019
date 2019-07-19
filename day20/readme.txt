@@ -14,6 +14,11 @@ https://wanderers.io/
 
 -------------------------------------------------
 
+미티어 소개
+
+meteor create testPrj
+cd testPrj
+meteor run
 
 미티어 앱 실행 => meteor run 
 http://192.168.0.15:3000/
