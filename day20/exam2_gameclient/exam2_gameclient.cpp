@@ -40,26 +40,35 @@ void OnRender(double fDelta, Graphics* pGrp)
 		g_GameObjs[0].m_Xpos += g_keyTable[VK_RIGHT] * fDelta * 25.0;
 		g_GameObjs[0].m_Ypos -= g_keyTable[VK_UP] * fDelta * 25.0;
 		g_GameObjs[0].m_Ypos += g_keyTable[VK_DOWN] * fDelta * 25.0;
-	}
 
-	if (g_hSocket != 0) {
-		static double _accTick = 0;
-		_accTick += fDelta;
-		if (_accTick > 1.0)
-		{
-			_accTick = 0.0;
-			memset(&si_ServerAddr, 0, sizeof(si_ServerAddr));
-			InetPton(AF_INET, L"192.168.0.15",&si_ServerAddr.sin_addr.S_un.S_addr);
-			si_ServerAddr.sin_family = AF_INET;
-			si_ServerAddr.sin_port = htons(3333);
 
-			//&g_GameObjs[0]
-			sendto(g_hSocket,(const char *)&g_GameObjs[0],sizeof(S_GameObject),0,
-				(sockaddr*)& si_ServerAddr, sizeof(si_ServerAddr));
+		if (g_hSocket != 0) {
+			static double _accTick = 0;
+			_accTick += fDelta;
+			if (_accTick > 1.0)
+			{
+				_accTick = 0.0;
+				memset(&si_ServerAddr, 0, sizeof(si_ServerAddr));
+				InetPton(AF_INET, L"192.168.0.15", &si_ServerAddr.sin_addr.S_un.S_addr);
+				si_ServerAddr.sin_family = AF_INET;
+				si_ServerAddr.sin_port = htons(3333);
+
+				//&g_GameObjs[0]
+				sendto(g_hSocket, (const char*)& g_GameObjs[0], sizeof(S_GameObject), 0,
+					(sockaddr*)& si_ServerAddr, sizeof(si_ServerAddr));
+
+				int slen = sizeof(si_ServerAddr);
+				recvfrom(g_hSocket, (char*)& g_GameObjs, sizeof(S_GameObject) * 32, 0,
+					(sockaddr*)& si_ServerAddr, &slen
+				);
+
+			}
 
 		}
 
 	}
+
+	
 	
 	pGrp->Clear(Color::Black);
 	pGrp->TranslateTransform(256, 256); //화면 중간을 원점으로(0,0)

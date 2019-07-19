@@ -24,7 +24,7 @@ int main()
 	for (int i = 0; i < 32; i++)
 	{
 		g_GameObjs[i].m_nStatus = 0;
-		strcpy(g_szIpTables[i], "");
+		strcpy_s(g_szIpTables[i],sizeof(g_szIpTables[i]), "");
 	}
 	
 
@@ -84,7 +84,7 @@ int main()
 		int i;
 		for ( i = 0; i < 32; i++) {
 			
-			if (strcmp(g_szIpTables[i], _szIp) == 0 || strcmp("", g_szIpTables[i]) )
+			if (strcmp(g_szIpTables[i], _szIp) == 0 || strcmp("", g_szIpTables[i])==0 )
 			{
 				break;
 			}
@@ -93,13 +93,14 @@ int main()
 		//저장
 		if (i < 32) { 
 			S_GameObject* pObj = (S_GameObject*)szBuf;
-			strcpy(g_szIpTables[i], _szIp);
+			strcpy_s(g_szIpTables[i],sizeof(g_szIpTables[i]), _szIp);
 			g_GameObjs[i].m_Xpos = pObj->m_Xpos;
 			g_GameObjs[i].m_Ypos = pObj->m_Ypos;
+			g_GameObjs[i].m_nStatus = 1;
 		}
-		
-		//전체 오브잭트 리스트 전송
 
+		sendto(hServerSocket, (char*)g_GameObjs, sizeof(S_GameObject) * 32, 0,
+			(sockaddr*)&si_other, sizeof(si_other));
 
 	}
 
