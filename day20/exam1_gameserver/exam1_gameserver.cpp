@@ -9,8 +9,25 @@
 
 #pragma comment(lib,"ws2_32.lib")
 
+struct S_GameObject {
+	int m_nStatus;
+	double m_Xpos;
+	double m_Ypos;
+	int m_nShape;
+};
+
+char g_szIpTables[32][64];
+S_GameObject g_GameObjs[32];
+
 int main()
 {
+	for (int i = 0; i < 32; i++)
+	{
+		g_GameObjs[i].m_nStatus = 0;
+		strcpy(g_szIpTables[i], "");
+	}
+	
+
 	SOCKET hServerSocket;
 
 	WSADATA wsa;
@@ -62,6 +79,27 @@ int main()
 		printf_s("from : %s : %d", _szIp, 
 			ntohs(si_other.sin_port) //ntohs,빅엔디언 => 리틀엔디언
 		);
+
+		//겹치는것이 있는지 검사.
+		int i;
+		for ( i = 0; i < 32; i++) {
+			
+			if (strcmp(g_szIpTables[i], _szIp) == 0 || strcmp("", g_szIpTables[i]) )
+			{
+				break;
+			}
+
+		}
+		//저장
+		if (i < 32) { 
+			S_GameObject* pObj = (S_GameObject*)szBuf;
+			strcpy(g_szIpTables[i], _szIp);
+			g_GameObjs[i].m_Xpos = pObj->m_Xpos;
+			g_GameObjs[i].m_Ypos = pObj->m_Ypos;
+		}
+		
+		//전체 오브잭트 리스트 전송
+
 
 	}
 
