@@ -8,3 +8,6 @@ client 요청(master,guest), server 응답(slave,host)
 
 sockaddr_in => 주소정보구조체
 
+https://wanderers.io/
+
+http://192.168.0.15:3000/
