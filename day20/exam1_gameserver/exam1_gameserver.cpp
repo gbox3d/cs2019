@@ -75,7 +75,7 @@ int main()
 			(sockaddr*)& si_other, &slen);
 
 		char _szIp[256];
-		inet_ntop(AF_INET, &si_severAddr.sin_addr, _szIp, sizeof(_szIp));
+		inet_ntop(AF_INET, &si_other.sin_addr, _szIp, sizeof(_szIp));
 		printf_s("from : %s : %d", _szIp, 
 			ntohs(si_other.sin_port) //ntohs,빅엔디언 => 리틀엔디언
 		);
@@ -97,6 +97,7 @@ int main()
 			g_GameObjs[i].m_Xpos = pObj->m_Xpos;
 			g_GameObjs[i].m_Ypos = pObj->m_Ypos;
 			g_GameObjs[i].m_nStatus = 1;
+			printf_s("x:%f y:%f\n", pObj->m_Xpos, pObj->m_Ypos);
 		}
 
 		sendto(hServerSocket, (char*)g_GameObjs, sizeof(S_GameObject) * 32, 0,

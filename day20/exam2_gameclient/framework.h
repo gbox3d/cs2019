@@ -22,3 +22,5 @@
 
 #pragma comment(lib,"ws2_32.lib")
 
+#include "../exam1_gameserver/packet.h"
+

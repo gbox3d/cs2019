@@ -17,15 +17,10 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-struct S_GameObject {
-	int m_nStatus;
-	double m_Xpos;
-	double m_Ypos;
-	int m_nShape;
-
-};
 
 int g_keyTable[1024];
+S_GameObject g_MyGameObj;
+
 S_GameObject g_GameObjs[32];
 
 SOCKET g_hSocket = 0;
@@ -36,10 +31,10 @@ void OnRender(double fDelta, Graphics* pGrp)
 {
 	
 	if (fDelta > 0) {
-		g_GameObjs[0].m_Xpos -= g_keyTable[VK_LEFT] * fDelta * 25.0;
-		g_GameObjs[0].m_Xpos += g_keyTable[VK_RIGHT] * fDelta * 25.0;
-		g_GameObjs[0].m_Ypos -= g_keyTable[VK_UP] * fDelta * 25.0;
-		g_GameObjs[0].m_Ypos += g_keyTable[VK_DOWN] * fDelta * 25.0;
+		g_MyGameObj.m_Xpos -= g_keyTable[VK_LEFT] * fDelta * 25.0;
+		g_MyGameObj.m_Xpos += g_keyTable[VK_RIGHT] * fDelta * 25.0;
+		g_MyGameObj.m_Ypos -= g_keyTable[VK_UP] * fDelta * 25.0;
+		g_MyGameObj.m_Ypos += g_keyTable[VK_DOWN] * fDelta * 25.0;
 
 
 		if (g_hSocket != 0) {
@@ -53,10 +48,11 @@ void OnRender(double fDelta, Graphics* pGrp)
 				si_ServerAddr.sin_family = AF_INET;
 				si_ServerAddr.sin_port = htons(3333);
 
-				//&g_GameObjs[0]
-				sendto(g_hSocket, (const char*)& g_GameObjs[0], sizeof(S_GameObject), 0,
+				//데이터 보내기 
+				sendto(g_hSocket, (const char*)& g_MyGameObj, sizeof(S_GameObject), 0,
 					(sockaddr*)& si_ServerAddr, sizeof(si_ServerAddr));
 
+				//데이터 받기
 				int slen = sizeof(si_ServerAddr);
 				recvfrom(g_hSocket, (char*)& g_GameObjs, sizeof(S_GameObject) * 32, 0,
 					(sockaddr*)& si_ServerAddr, &slen

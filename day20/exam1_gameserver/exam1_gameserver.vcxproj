@@ -153,6 +153,9 @@
   <ItemGroup>
     <ClCompile Include="exam1_gameserver.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="packet.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
